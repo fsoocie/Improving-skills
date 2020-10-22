@@ -4,6 +4,7 @@ const router = Router()
 
 router.get('/users', UserController.showAll)
 router.get('/users/:_id', UserController.showById)
+router.get('/verify/:hash', UserController.verify)
 
 router.post('/register', UserController.register)
 
