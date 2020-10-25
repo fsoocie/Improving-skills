@@ -1,9 +1,10 @@
-import passport from "passport";
+import passport from 'passport'
+import {createHash} from 'crypto'
 import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
 import {Strategy as JWTStrategy, StrategyOptions} from 'passport-jwt'
+import {Strategy as LocalStrategy} from 'passport-local'
 import {ExtractJwt} from 'passport-jwt'
-import User, { IUser } from "../models/User";
-import {createHash} from "crypto";
+import User, { IUser } from '../models/User'
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID!,
@@ -43,6 +44,20 @@ passport.use(new JWTStrategy(jwtOptions, async ({data: userPayload}, done) => {
   } catch (error) {return done(error, false)}
 }))
 
+passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'},
+  async (email, password, done) => {
+    try {
+      const user = await User.findOne({email})
+      if (!user) {
+        return done(null, false, {message: 'wrong email'})
+      }
+      if (user.password === createHash('md5').update(password + process.env.SECRET_KEY).digest('hex')) {
+        return done(null, user)
+      }
+      return done(null, false, {message: 'wrong password'})
+    } catch (error) {return done(error, false)}
+
+}))
 
 passport.serializeUser(function(user: IUser, done) {
   done(null, user._id);

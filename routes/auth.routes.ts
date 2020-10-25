@@ -17,6 +17,7 @@ router.get('/google/callback',
 
 
 router.post('/register', registerValidator, UserController.register)
+router.post('/local', passport.authenticate('local'), UserController.afterLocalLogin)
 
 
 export default router

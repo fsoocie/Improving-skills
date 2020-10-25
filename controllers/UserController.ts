@@ -84,6 +84,19 @@ class UserCtrl {
       })
     } catch (error) {res.status(500).json({status: 'error', message: error.message})}
   }
+  async afterLocalLogin(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      const user = req.user? (req.user as IDocumentUser).toJSON() : undefined
+      if (!user) {
+        res.status(404).send()
+      }
+      res.json( {status: 'success', data: {
+        ...user,
+          token: jwt.sign({data: user}, process.env.SECRET_KEY || 'SECRET_KEY', {expiresIn: '7d'} )
+        }})
+    } catch (error) {res.status(500).json({status: 'error', message: error.message})}
+  }
+
   async me(req: express.Request, res: express.Response): Promise<void> {
     try {
       res.json({data:req.user})

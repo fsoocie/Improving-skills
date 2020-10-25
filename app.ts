@@ -19,6 +19,3 @@ connect(() => {
   })
 })
 
-
-// TODO: JWT authentication
-
