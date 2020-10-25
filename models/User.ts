@@ -1,22 +1,22 @@
 import {Document, Schema, model} from "mongoose";
 
-interface IUser extends Document {
-  password: string,
+export interface IUser {
+  _id?: string,
+  password?: string,
   username: string,
-  email: string,
-  confirmHash?: string
+  email: string | undefined,
+  confirmHash?: string,
   isConfirmed?: boolean,
+  googleId?: string
 }
 
-const schema: Schema = new Schema({
-  password: {
-    type: String,
-    required: true
-  },
+export type IDocumentUser = IUser & Document
+
+const schema: Schema<IDocumentUser> = new Schema({
+  password: String,
   username: {
     type: String,
     required: true,
-    unique: true
   },
   email: {
     type: String,
@@ -29,8 +29,14 @@ const schema: Schema = new Schema({
   },
   confirmHash: {
     type: String,
+    required: true,
+    unique: true
+  },
+  googleId: {
+    type: String,
     unique: true
   }
 })
 
-export default model<IUser>('User', schema)
+
+export default model<IDocumentUser>('User', schema)
