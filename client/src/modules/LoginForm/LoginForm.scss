@@ -1,0 +1,24 @@
+.ant-input-prefix {
+  margin-right: 6px;
+}
+
+.login-form {
+  width: 460px;
+  padding: 32px 36px 16px 28px;
+  background: aliceblue;
+  border-radius: 12px;
+}
+.loginItem {
+  display: flex;
+  justify-content: center;
+  &__button {
+    height: 42px;
+    width: 260px;
+    border-radius: 8px;
+  }
+}
+.googleSignInItem {
+  button {
+    margin: 0 auto;
+  }
+}

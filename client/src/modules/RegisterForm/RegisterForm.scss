@@ -1,0 +1,25 @@
+.register-form {
+  width: 460px;
+  padding: 33px 36px 22px 28px;
+  background: aliceblue;
+  border-radius: 12px;
+}
+.loginItem {
+  display: flex;
+  justify-content: center;
+  &__button {
+    height: 40px;
+    width: 260px;
+    border-radius: 8px;
+  }
+}
+.googleSignInItem {
+  button {
+    margin: 8px auto 0 auto;
+  }
+}
+.register-form-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
