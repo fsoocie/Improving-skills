@@ -1,36 +1,39 @@
 import {Carousel} from "antd";
-import React, {CSSProperties} from "react";
+import React, {RefObject, useRef} from "react";
 import '../styles/Authenticate/AuthenticatePage.scss'
 import {LoginForm} from "../modules/LoginForm/LoginForm";
 import {RegisterForm} from "../modules/RegisterForm/RegisteForm";
 import classNames from 'classnames'
+import {StartForm} from "../modules/StartForm/StartForm";
 
-const contentStyle: CSSProperties = {
-  height: '100vh',
-  width: '100vw',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
+export enum Slides {
+  Start = 0,
+  Login = 1,
+  Register = 2
+}
 
 export const AuthenticatePage = () => {
 
-  const onChange = () => console.log('changed')
+  const carouselRef = useRef<Carousel | null>(null)
+  const setSlide = (slide: number) => {
+    carouselRef.current!.goTo(slide)
+  }
 
   return (
-    <Carousel dots={{className: 'dots'}} afterChange={onChange}>
+    <Carousel ref={carousel => carouselRef.current = carousel} dots={{className: 'dots'}}>
       <div>
-        <div style={{...contentStyle, background: "green"}}>1</div>
+        <div className='authPage startPage'>
+          <StartForm setSlide={setSlide}/>
+        </div>
       </div>
       <div>
         <div className={classNames('authPage', 'loginPage')}>
-            <LoginForm />
+            <LoginForm setSlide={setSlide} />
         </div>
       </div>
       <div>
         <div className={classNames('authPage', 'registerPage')}>
-          <RegisterForm />
+          <RegisterForm setSlide={setSlide} />
         </div>
       </div>
     </Carousel>

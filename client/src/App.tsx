@@ -4,7 +4,6 @@ import {AuthenticatePage} from "./pages/AuthenticatePage";
 
 
 function App() {
-
   return (
     <AuthenticatePage />
   );

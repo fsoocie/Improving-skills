@@ -4,17 +4,22 @@ import React from 'react';
 import './RegisterForm.scss'
 import {FormField} from "../../components/FormField/FormField";
 import {GoogleButton} from "../../components/GoogleButton/GoogleButton";
+import {Slides} from "../../pages/AuthenticatePage";
 
-export const RegisterForm = () => {
+interface IRegisterFormProps {
+  setSlide: (slide: number) => void
+}
+
+export const RegisterForm: React.FC<IRegisterFormProps> = ({setSlide}) => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
 
   return (
     <Form
-      name="normal_login"
+      name="normal_register"
       className="register-form"
-      initialValues={{ remember: true }}
+      initialValues={{remember: true}}
       onFinish={onFinish}
     >
       <div className='register-form-header'>
@@ -23,49 +28,55 @@ export const RegisterForm = () => {
 
       <FormField
         name='username'
-        prefix={<UserOutlined className="site-form-item-icon" />}
+        prefix={<UserOutlined className="site-form-item-icon"/>}
         placeholder='Enter Username'
-        rules={[{ required: true, message: 'Please input your Username' }]}
+        rules={[{required: true, message: 'Please input your Username'}]}
         size='large'
         type='text'
       />
 
       <FormField
         name='email'
-        prefix={<MailOutlined />}
+        prefix={<MailOutlined/>}
         placeholder='Enter E-mail'
-        rules={[{ required: true, message: 'Please input your E-mail!' }]}
+        rules={[{required: true, message: 'Please input your E-mail!'}]}
         size='large'
         type='text'
       />
 
       <FormField
-        prefix={<LockOutlined className="site-form-item-icon" />}
+        prefix={<LockOutlined className="site-form-item-icon"/>}
         type='password'
         size='large'
         placeholder='Enter Password'
         name='password'
-        rules={[{ required: true, message: 'Please input your Password!' }]}
+        rules={[{required: true, message: 'Please input your Password!'}]}
       />
 
       <FormField
-        prefix={<LockOutlined className="site-form-item-icon" />}
+        prefix={<LockOutlined className="site-form-item-icon"/>}
         type='password'
         size='large'
         placeholder='Repeat Password'
         name='repeatPassword'
-        rules={[{ required: true, message: 'Please repeat your Password!' }]}
+        rules={[{required: true, message: 'Please repeat your Password!'}]}
       />
 
       <Form.Item>
-        <div className='loginItem'>
-          <Button className='loginItem__button' type="primary" htmlType="submit" >
-            <Typography.Title level={5} style={{color: 'aliceblue', marginTop: 2}}>Register</Typography.Title>
+        <div className='registerItem'>
+          <Button className='registerItem__button' type="primary" htmlType="submit">
+            <Typography.Title level={5}>Register</Typography.Title>
           </Button>
         </div>
       </Form.Item>
+
       <Form.Item className='googleSignInItem'>
-        <GoogleButton text='Sign Up with Google' />
+        <GoogleButton text='Sign Up with Google'/>
       </Form.Item>
+
+
+      <Typography.Link className='linkToLogin' onClick={setSlide.bind(null, Slides.Login)} type='secondary'>or Login</Typography.Link>
+
     </Form>
-  )}
+  )
+}
