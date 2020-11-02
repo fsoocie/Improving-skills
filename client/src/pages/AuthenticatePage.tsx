@@ -1,8 +1,8 @@
 import {Carousel} from "antd";
-import React, {RefObject, useRef} from "react";
+import React, {useRef} from "react";
 import '../styles/Authenticate/AuthenticatePage.scss'
 import {LoginForm} from "../modules/LoginForm/LoginForm";
-import {RegisterForm} from "../modules/RegisterForm/RegisteForm";
+import {RegisterForm} from "../modules/RegisterForm/RegisterForm";
 import classNames from 'classnames'
 import {StartForm} from "../modules/StartForm/StartForm";
 
