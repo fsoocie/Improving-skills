@@ -1,10 +1,10 @@
-import {Carousel} from "antd";
-import React, {useRef} from "react";
-import '../styles/Authenticate/AuthenticatePage.scss'
-import {LoginForm} from "../modules/LoginForm/LoginForm";
-import {RegisterForm} from "../modules/RegisterForm/RegisterForm";
-import classNames from 'classnames'
-import {StartForm} from "../modules/StartForm/StartForm";
+import React, {useRef} from 'react';
+import classNames from 'classnames';
+import '../styles/Authenticate/AuthenticatePage.scss';
+import {Carousel} from 'antd';
+import {LoginForm} from '../modules/LoginForm/LoginForm';
+import {RegisterForm} from '../modules/RegisterForm/RegisterForm';
+import {StartForm} from '../modules/StartForm/StartForm';
 
 export enum Slides {
   Start = 0,

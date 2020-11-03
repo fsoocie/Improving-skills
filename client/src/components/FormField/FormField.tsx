@@ -1,16 +1,15 @@
-import {Form, Input} from "antd";
-import { FormItemProps } from "antd/lib/form";
-import { InputProps } from "antd/lib/input";
-import React from "react";
-import './FormField.scss'
-import {Controller} from "react-hook-form";
+import React from 'react';
+import './FormField.scss';
+import {Form, Input} from 'antd';
+import {FormItemProps} from 'antd/lib/form';
+import {InputProps} from 'antd/lib/input';
+import {Controller} from 'react-hook-form';
 
 type IFormFieldProps = FormItemProps & InputProps
 
 export const FormField: React.FC<IFormFieldProps> = (props) => {
   return (
     <Form.Item
-      name={props.name}
       rules={props.rules}
       help={props.help}
       hasFeedback={props.hasFeedback}
@@ -18,6 +17,7 @@ export const FormField: React.FC<IFormFieldProps> = (props) => {
     >
      <Input
       className='formInput'
+      name={props.name}
       size={props.size}
       prefix={props.prefix}
       type={props.type}
@@ -35,7 +35,6 @@ interface IControlFormFieldProps extends IFormFieldProps {
 export const ControlFormField: React.FC<IControlFormFieldProps> = (props) => {
   return (
     <Form.Item
-      name={props.name}
       help={props.help}
       validateStatus={props.validateStatus}
       hasFeedback={props.hasFeedback}

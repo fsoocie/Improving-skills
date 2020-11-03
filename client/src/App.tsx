@@ -1,12 +1,10 @@
-import 'antd/dist/antd.css'
 import React from 'react';
-import {AuthenticatePage} from "./pages/AuthenticatePage";
+import 'antd/dist/antd.css';
+import {AuthenticatePage} from './pages/AuthenticatePage';
 
 
-function App() {
+export const App = () => {
   return (
     <AuthenticatePage />
   );
 }
-
-export default App;

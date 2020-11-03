@@ -1,12 +1,12 @@
-import {Button, Form, Typography} from 'antd';
-import {LockOutlined, MailOutlined} from '@ant-design/icons';
 import React from 'react';
 import './LoginForm.scss'
-import {GoogleButton} from "../../components/GoogleButton/GoogleButton";
-import {Slides} from '../../pages/AuthenticatePage';
-import {useForm} from "react-hook-form";
 import * as yup from 'yup';
+import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
+import {Button, Form, Typography} from 'antd';
+import {LockOutlined, MailOutlined} from '@ant-design/icons';
+import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
+import {Slides} from '../../pages/AuthenticatePage';
 import {getHelp, getValidateStatus} from '../../utils/validateHelper';
 import {ControlFormField} from '../../components/FormField/FormField';
 
@@ -25,9 +25,8 @@ const loginSchema = yup.object().shape({
     .min(10, 'Minimum E-Mail length is 6 symbols').max(40, 'Maximum E-Mail length is 40 symbols'),
   password: yup.string().required('Required field').matches(/^[a-zA-Z0-9()$%_/.]*$/, 'Password can only contain numbers and Latin letters')
     .min(6, 'Minimum password length is 6 symbols').max(40, 'Maximum password length is 40 symbols')
-
 })
-console.log(loginSchema)
+
 export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
 
   const {getValues, control, handleSubmit, errors} = useForm<ILoginFormFields>({
@@ -35,15 +34,13 @@ export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
   })
   const formValues = getValues()
 
-  console.log(errors)
   const onSubmit = (values: any) => {
-    console.log('Received values of form: ', values);
+    console.log('Received values of LOGIN: ', values);
   };
 
   return (
     <Form
-      name="login-form"
-      className="login-form"
+      className='login-form'
       initialValues={{ remember: true }}
       onFinish={handleSubmit(onSubmit)}
     >
@@ -69,7 +66,7 @@ export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
         prefix={<LockOutlined />}
         placeholder='Enter Password'
         size='large'
-        type='text'
+        type='password'
         help={getHelp(formValues.password, errors.password?.message)}
         validateStatus={getValidateStatus(formValues.password, !!errors.password)}
         hasFeedback
@@ -77,7 +74,7 @@ export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
 
       <Form.Item style={{marginBottom: 18}}>
         <div className='loginItem'>
-          <Button className='loginItem__button' type="primary" htmlType="submit" >
+          <Button className='loginItem__button' type='primary' htmlType='submit' >
             <Typography.Title level={5} style={{color: 'aliceblue', marginTop: 2}}>Login</Typography.Title>
           </Button>
         </div>

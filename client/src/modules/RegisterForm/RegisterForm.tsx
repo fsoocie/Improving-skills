@@ -1,70 +1,111 @@
+import React from 'react';
+import './RegisterForm.scss';
+import * as yup from 'yup';
 import {Button, Form, Typography} from 'antd';
 import {LockOutlined, UserOutlined, MailOutlined} from '@ant-design/icons';
-import React from 'react';
-import './RegisterForm.scss'
-import {FormField} from "../../components/FormField/FormField";
-import {GoogleButton} from "../../components/GoogleButton/GoogleButton";
-import {Slides} from "../../pages/AuthenticatePage";
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {ControlFormField} from '../../components/FormField/FormField';
+import {GoogleButton} from '../../components/GoogleButton/GoogleButton';
+import {Slides} from '../../pages/AuthenticatePage';
+import {getHelp, getValidateStatus } from '../../utils/validateHelper';
 
 interface IRegisterFormProps {
   setSlide: (slide: number) => void
 }
 
+interface IRegisterFormFields {
+  username: string
+  email: string
+  password: string
+  repeatPassword: string
+}
+
+const registerSchema = yup.object().shape({
+  username: yup.string().required('Required field')
+    .min(6, 'Minimum Username length is 6 symbols').max(24, 'Maximum Username length is 24 symbols')
+    .matches(/^[a-zA-Z0-9()$%_/.]*$/, 'Username can only contain numbers and Latin letters'),
+  email: yup.string().required('Required field')
+    .email('Invalid E-mail')
+    .min(10, 'Minimum E-Mail length is 6 symbols').max(40, 'Maximum E-Mail length is 40 symbols'),
+  password: yup.string().required('Required field').matches(/^[a-zA-Z0-9()$%_/.]*$/, 'Password can only contain numbers and Latin letters')
+    .min(6, 'Minimum password length is 6 symbols').max(40, 'Maximum password length is 40 symbols'),
+  repeatPassword: yup.string().required('Required Field').oneOf([yup.ref('password')], 'Passwords must match')
+})
+
+
 export const RegisterForm: React.FC<IRegisterFormProps> = ({setSlide}) => {
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+
+  const {control, handleSubmit, getValues, errors, formState} = useForm<IRegisterFormFields>({
+    resolver: yupResolver(registerSchema)
+  })
+  const formValues = getValues()
+
+  const onSubmit = (values: any) => {
+    console.log('Received values of REGISTER: ', values);
   };
 
   return (
     <Form
-      name="normal_register"
-      className="register-form"
+      className='register-form'
       initialValues={{remember: true}}
-      onFinish={onFinish}
+      onFinish={handleSubmit(onSubmit)}
     >
       <div className='register-form-header'>
         <Typography.Title level={3}>Registration</Typography.Title>
       </div>
 
-      <FormField
+      <ControlFormField
         name='username'
-        prefix={<UserOutlined className="site-form-item-icon"/>}
+        control={control}
+        prefix={<UserOutlined />}
         placeholder='Enter Username'
-        rules={[{required: true, message: 'Please input your Username'}]}
         size='large'
         type='text'
+        help={getHelp(formValues.username, errors.username?.message)}
+        validateStatus={getValidateStatus(formValues.username, !!errors.username)}
+        hasFeedback
       />
 
-      <FormField
+      <ControlFormField
         name='email'
-        prefix={<MailOutlined/>}
+        control={control}
+        prefix={<MailOutlined />}
         placeholder='Enter E-mail'
-        rules={[{required: true, message: 'Please input your E-mail!'}]}
         size='large'
         type='text'
+        help={getHelp(formValues.email, errors.email?.message)}
+        validateStatus={getValidateStatus(formValues.email, !!errors.email)}
+        hasFeedback
       />
 
-      <FormField
-        prefix={<LockOutlined className="site-form-item-icon"/>}
-        type='password'
-        size='large'
-        placeholder='Enter Password'
+      <ControlFormField
         name='password'
-        rules={[{required: true, message: 'Please input your Password!'}]}
+        control={control}
+        prefix={<LockOutlined />}
+        placeholder='Enter Password'
+        size='large'
+        type='password'
+        help={getHelp(formValues.password, errors.password?.message)}
+        validateStatus={getValidateStatus(formValues.password, !!errors.password)}
+        hasFeedback
       />
 
-      <FormField
-        prefix={<LockOutlined className="site-form-item-icon"/>}
-        type='password'
-        size='large'
-        placeholder='Repeat Password'
+      <ControlFormField
         name='repeatPassword'
-        rules={[{required: true, message: 'Please repeat your Password!'}]}
+        control={control}
+        prefix={<LockOutlined />}
+        placeholder='Repeat Password'
+        size='large'
+        type='password'
+        help={getHelp(formValues.repeatPassword, errors.repeatPassword?.message)}
+        validateStatus={formState.touched.repeatPassword? !!errors.repeatPassword? 'error': 'success' : ''}
+        hasFeedback
       />
 
       <Form.Item>
         <div className='registerItem'>
-          <Button className='registerItem__button' type="primary" htmlType="submit">
+          <Button className='registerItem__button' type='primary' htmlType='submit'>
             <Typography.Title level={5}>Register</Typography.Title>
           </Button>
         </div>
