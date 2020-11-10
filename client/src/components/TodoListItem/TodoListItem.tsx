@@ -1,10 +1,8 @@
 import React from 'react'
+import {ITask} from '../../store/ducks/todos/types/state'
 
 interface ITodoListItemProps {
-  task: {
-    id: string,
-    content: string
-  }
+  task: ITask
 }
 
 export const TodoListItem: React.FC<ITodoListItemProps> = ({task}) => {

@@ -1,4 +1,7 @@
-export default {
+import produce from 'immer'
+import { ITodosState } from './types/state'
+
+const initialTodosState: ITodosState = {
   tasks: [
     {
       id: 'task-1',
@@ -17,12 +20,12 @@ export default {
     {
       id: 'column-1',
       title: 'Example Title1',
-      taskIds: ['task-1', 'task-2', 'task-3']
+      taskIds: ['task-1', 'task-3']
     },
     {
       id: 'column-2',
       title: 'Example Title2',
-      taskIds: []
+      taskIds: ['task-2']
     },
     {
       id: 'column-3',
@@ -32,3 +35,10 @@ export default {
   ],
   columnsOrder: ['column-1', 'column-2', 'column-3']
 }
+
+export const todosReducer = produce((draft, action) => {
+  switch (action.type) {
+    case 'SET_TASKS':
+      draft.tasks = action.payload
+  }
+}, initialTodosState)

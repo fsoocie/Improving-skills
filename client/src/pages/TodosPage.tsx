@@ -1,51 +1,23 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import { TodoList } from '../components/TodoList/TodoList';
+import {selectTodosColumns, selectTodosColumnsOrder} from '../store/ducks/todos/selectors'
 import '../styles/Todos/TodosPage.scss'
-import initialData from '../assets/initialData'
-
-interface IColumn {
-  id: string,
-  title: string,
-  taskIds: string[]
-}
-
-interface IState {
-  columns: {
-    [k: string]: {
-      id: string,
-      title: string,
-      taskIds: string[]
-    }
-  },
-  tasks: {
-    'task-1': {
-      id: string,
-      content: string
-    },
-    'task-2': {
-      id: string,
-      content: string
-    },
-    'task-3': {
-      id: string,
-      content: string
-    }
-  },
-  columnsOrder: string[]
-}
 
 export const TodosPage = () => {
 
-  const state: IState = initialData
+  const columnsOrder = useSelector(selectTodosColumnsOrder)
+  const columns = useSelector(selectTodosColumns)
 
   return (
     <div className='todosPage'>
       <div className="todoListsWrapper">
-        {state.columnsOrder.map((colId) => {
-          const column:IColumn = state.columns[colId]
-          const tasks = state.tasks
+        {columnsOrder.map((colId) => {
+          const column = columns.find(column => column.id === colId)
 
-          return <TodoList key={column.id} column={column} tasks={tasks}/>
+          if (column) {
+            return <TodoList key={column.id} column={column}/>
+          }
         })}
       </div>
     </div>

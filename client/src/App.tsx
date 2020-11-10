@@ -6,7 +6,7 @@ import {TodosPage} from './pages/TodosPage'
 
 export const App = () => {
   return (
-    <TodosPage />
-    /*<AuthenticatePage />*/
+      <TodosPage />
+    /* <AuthenticatePage />*/
   );
 }
