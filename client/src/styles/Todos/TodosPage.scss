@@ -1,0 +1,38 @@
+.todosPage {
+  background: #4C9AFF;
+  height: 100%;
+}
+
+.todoList-container {
+  box-sizing: content-box;
+}
+
+.todoListsWrapper {
+  padding-top: 8px; // Neverno
+  display: flex;
+}
+
+.todoList {
+  background-color: #EBECF0;
+  border-radius: 2px;
+  margin: 0 8px 8px 8px;
+  padding: 8px;
+
+  display: flex;
+  flex-direction: column;
+  &__title {
+    height: 36px;
+  }
+  &__content {
+    width: 250px;
+  }
+}
+
+.todoListItem {
+  border-radius: 2px;
+  min-height: 48px;
+  background: white;
+  margin-bottom: 8px;
+  padding: 8px;
+  display: flex;
+}

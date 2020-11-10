@@ -8,6 +8,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {ControlFormField} from '../../components/FormField/FormField';
 import {GoogleButton} from '../../components/GoogleButton/GoogleButton';
 import {Slides} from '../../pages/AuthenticatePage';
+import {authApi, ISignUpPayload} from '../../services/api/authApi'
 import {getHelp, getValidateStatus } from '../../utils/validateHelper';
 
 interface IRegisterFormProps {
@@ -18,7 +19,7 @@ interface IRegisterFormFields {
   username: string
   email: string
   password: string
-  repeatPassword: string
+  password2: string
 }
 
 const registerSchema = yup.object().shape({
@@ -30,7 +31,7 @@ const registerSchema = yup.object().shape({
     .min(10, 'Minimum E-Mail length is 6 symbols').max(40, 'Maximum E-Mail length is 40 symbols'),
   password: yup.string().required('Required field').matches(/^[a-zA-Z0-9()$%_/.]*$/, 'Password can only contain numbers and Latin letters')
     .min(6, 'Minimum password length is 6 symbols').max(40, 'Maximum password length is 40 symbols'),
-  repeatPassword: yup.string().required('Required Field').oneOf([yup.ref('password')], 'Passwords must match')
+  password2: yup.string().required('Required Field').oneOf([yup.ref('password')], 'Passwords must match')
 })
 
 
@@ -41,8 +42,15 @@ export const RegisterForm: React.FC<IRegisterFormProps> = ({setSlide}) => {
   })
   const formValues = getValues()
 
-  const onSubmit = (values: any) => {
-    console.log('Received values of REGISTER: ', values);
+  const onSubmit = async (payload: ISignUpPayload) => {
+    console.log('Received values of REGISTER: ', payload);
+    const {status, data} = await authApi.signUp(payload)
+    if (status === 'success') {
+      window.localStorage.setItem('Authorization', data.token)
+      window.history.pushState(null, 'register', '/home')
+    } else {
+      console.log('error REGISTER')
+    }
   };
 
   return (
@@ -92,14 +100,14 @@ export const RegisterForm: React.FC<IRegisterFormProps> = ({setSlide}) => {
       />
 
       <ControlFormField
-        name='repeatPassword'
+        name='password2'
         control={control}
         prefix={<LockOutlined />}
         placeholder='Repeat Password'
         size='large'
         type='password'
-        help={getHelp(formValues.repeatPassword, errors.repeatPassword?.message)}
-        validateStatus={formState.touched.repeatPassword? !!errors.repeatPassword? 'error': 'success' : ''}
+        help={getHelp(formValues.password2, errors.password2?.message)}
+        validateStatus={formState.touched.password2? !!errors.password2? 'error': 'success' : ''}
         hasFeedback
       />
 

@@ -7,6 +7,7 @@ import {Button, Form, Typography} from 'antd';
 import {LockOutlined, MailOutlined} from '@ant-design/icons';
 import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
 import {Slides} from '../../pages/AuthenticatePage';
+import {authApi} from '../../services/api/authApi'
 import {getHelp, getValidateStatus} from '../../utils/validateHelper';
 import {ControlFormField} from '../../components/FormField/FormField';
 
@@ -34,8 +35,14 @@ export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
   })
   const formValues = getValues()
 
-  const onSubmit = (values: any) => {
-    console.log('Received values of LOGIN: ', values);
+  const onSubmit = async (values: any) => {
+    const {status, data} = await authApi.signIn(values)
+    if (status === 'success') {
+      window.localStorage.setItem('Authorization', data.token)
+      window.history.pushState(null, 'string', '/home')
+    } else {
+      console.log('error login')
+    }
   };
 
   return (
