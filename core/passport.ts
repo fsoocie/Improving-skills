@@ -34,9 +34,7 @@ const jwtOptions: StrategyOptions = {
 
 passport.use(new JWTStrategy(jwtOptions, async ({data: userPayload}, done) => {
   try {
-    console.log(userPayload)
     const user = await User.findById(userPayload._id)
-    console.log(user)
     if (!user) {
       return done(null, false)
     }

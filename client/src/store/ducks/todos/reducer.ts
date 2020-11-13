@@ -1,5 +1,6 @@
 import produce, {setAutoFreeze} from 'immer'
 import {ITodosState} from './types/state'
+
 setAutoFreeze(false)
 const initialTodosState: ITodosState = {
   tasks: [
@@ -33,12 +34,12 @@ const initialTodosState: ITodosState = {
       taskIds: []
     }
   ],
-  columnsOrder: ['column-1', 'column-2', 'column-3']
 }
 
 export const todosReducer = produce((draft, action) => {
   switch (action.type) {
     case 'SET_COLUMNS':
       draft.columns = action.payload
+      break;
   }
 }, initialTodosState)

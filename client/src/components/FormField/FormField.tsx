@@ -1,9 +1,9 @@
-import React from 'react';
-import './FormField.scss';
-import {Form, Input} from 'antd';
-import {FormItemProps} from 'antd/lib/form';
-import {InputProps} from 'antd/lib/input';
-import {Controller} from 'react-hook-form';
+import React from 'react'
+import './FormField.scss'
+import {Form, Input} from 'antd'
+import {FormItemProps} from 'antd/lib/form'
+import {InputProps} from 'antd/lib/input'
+import {Controller} from 'react-hook-form'
 
 type IFormFieldProps = FormItemProps & InputProps
 

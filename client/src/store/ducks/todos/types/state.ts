@@ -9,10 +9,7 @@ export interface ITask {
   content: string
 }
 
-export type IColumnsOrder = string[]
-
 export interface ITodosState {
   columns: IColumn[],
   tasks: ITask[],
-  columnsOrder: IColumnsOrder
 }

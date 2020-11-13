@@ -27,8 +27,11 @@ class UserCtrl {
         subject: 'Confirm your Improving-Skills account.',
         html: `<span>To verify your account, please <a href='http://localhost:5000/auth/verify/${data.confirmHash}'><b>click me</b></a></span>`
       })
-      res.status(201).json({status: 'success', data: user})
+      res.status(201).json({status: 'success', data:{
+          token: jwt.sign({data: user}, process.env.SECRET_KEY || 'SECRET_KEY')
+        }})
     } catch (error) {
+      console.log(error)
       res.status(500).json({status: 'error', message: error})
     }
   }
@@ -91,7 +94,6 @@ class UserCtrl {
         res.status(404).send()
       }
       res.json( {status: 'success', data: {
-        ...user,
           token: jwt.sign({data: user}, process.env.SECRET_KEY || 'SECRET_KEY', {expiresIn: '7d'} )
         }})
     } catch (error) {res.status(500).json({status: 'error', message: error.message})}

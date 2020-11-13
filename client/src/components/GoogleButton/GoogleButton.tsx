@@ -1,7 +1,7 @@
-import React from 'react';
-import './GoogleButton.scss';
-import {Button, Typography} from 'antd';
-import GoogleIcon from '../../assets/svg/google.svg';
+import React from 'react'
+import './GoogleButton.scss'
+import {Button, Typography} from 'antd'
+import GoogleIcon from '../../assets/svg/google.svg'
 
 interface IGoogleButtonProps {
   text: string

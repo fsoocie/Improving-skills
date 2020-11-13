@@ -1,7 +1,7 @@
-import React from 'react';
-import './StartForm.scss';
-import {Button, Typography} from 'antd';
-import { Slides } from '../../pages/AuthenticatePage';
+import React from 'react'
+import './StartForm.scss'
+import {Button, Typography} from 'antd'
+import {Slides} from '../../pages/AuthenticatePage'
 
 interface IStartFormProps {
   setSlide: (slide: number) => void

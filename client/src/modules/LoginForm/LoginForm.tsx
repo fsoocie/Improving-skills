@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import './LoginForm.scss'
-import * as yup from 'yup';
+import * as yup from 'yup'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
-import {Button, Form, Typography} from 'antd';
-import {LockOutlined, MailOutlined} from '@ant-design/icons';
+import {Button, Form, Typography} from 'antd'
+import {LockOutlined, MailOutlined} from '@ant-design/icons'
 import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
-import {Slides} from '../../pages/AuthenticatePage';
+import {Slides} from '../../pages/AuthenticatePage'
 import {authApi} from '../../services/api/authApi'
-import {getHelp, getValidateStatus} from '../../utils/validateHelper';
-import {ControlFormField} from '../../components/FormField/FormField';
+import {getHelp, getValidateStatus} from '../../utils/validateHelper'
+import {ControlFormField} from '../../components/FormField/FormField'
 
 interface ILoginFormProps {
   setSlide: (slide: number) => void

@@ -2,8 +2,8 @@ import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {TodoList} from '../components/TodoList/TodoList'
 import {setColumns} from '../store/ducks/todos/actionCreators'
-import {selectTodosColumns, selectTodosColumnsOrder} from '../store/ducks/todos/selectors'
-import {DragDropContext, DropResult} from 'react-beautiful-dnd'
+import {selectTodosColumns} from '../store/ducks/todos/selectors'
+import {DragDropContext, Droppable, DropResult} from 'react-beautiful-dnd'
 import '../styles/Todos/TodosPage.scss'
 import {getNewColumns, getNewColumnsState} from '../utils/DNDHelper'
 
@@ -11,7 +11,6 @@ export const TodosPage = () => {
 
   const dispatch = useDispatch()
 
-  const columnsOrder = useSelector(selectTodosColumnsOrder)
   const columns = useSelector(selectTodosColumns)
 
   const onDragEnd = (result: DropResult) => {
@@ -24,31 +23,42 @@ export const TodosPage = () => {
       return;
     }
 
-    if (type === 'task') {
-      const sourceColumn = columns.find(c => c.id === source.droppableId)
-      const destColumn = columns.find(c => c.id === destination.droppableId)
-      if (sourceColumn && destColumn) {
-        const {newSourceColumn, newDestColumn} = getNewColumns(sourceColumn, destColumn, result)
-        const newColumnsState = getNewColumnsState(columns, newSourceColumn, newDestColumn)
-        dispatch(setColumns(newColumnsState))
-      }
+    if (type === 'col') {
+      const [removed] = columns.splice(source.index, 1)
+      columns.splice(destination.index, 0, removed)
+      dispatch(setColumns(columns))
       return;
     }
 
+    const sourceColumn = columns.find(col => col.id === source.droppableId)
+    const destColumn = columns.find(col => col.id === destination.droppableId)
+    if (sourceColumn && destColumn) {
+      if (sourceColumn !== destColumn) {
+        const {newSourceColumn, newDestColumn} = getNewColumns(result, sourceColumn, destColumn)
+        dispatch(setColumns(getNewColumnsState(columns, newSourceColumn, newDestColumn)))
+      } else {
+        const {newSourceColumn} = getNewColumns(result, sourceColumn!)
+        dispatch(setColumns(getNewColumnsState(columns, newSourceColumn)))
+      }
+    }
   }
 
   return (
     <div className='todosPage'>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="todoListsWrapper">
-          {columnsOrder.map((colId) => {
-            const column = columns.find(column => column.id === colId)
-
-            if (column) {
-              return <TodoList key={column.id} column={column}/>
-            }
-          })}
-        </div>
+        <Droppable droppableId='cols-droppable' type='col' direction='horizontal'>
+          {provided => (
+            <div className="todoListsWrapper"
+                 {...provided.droppableProps}
+                 ref={provided.innerRef}
+            >
+              {columns.map((column, index) => {
+                  return <TodoList key={column.id} column={column} index={index}/>
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   )

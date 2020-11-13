@@ -1,15 +1,15 @@
-import React from 'react';
-import './RegisterForm.scss';
-import * as yup from 'yup';
-import {Button, Form, Typography} from 'antd';
-import {LockOutlined, UserOutlined, MailOutlined} from '@ant-design/icons';
-import {useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {ControlFormField} from '../../components/FormField/FormField';
-import {GoogleButton} from '../../components/GoogleButton/GoogleButton';
-import {Slides} from '../../pages/AuthenticatePage';
+import React from 'react'
+import './RegisterForm.scss'
+import * as yup from 'yup'
+import {Button, Form, Typography} from 'antd'
+import {LockOutlined, UserOutlined, MailOutlined} from '@ant-design/icons'
+import {useForm} from 'react-hook-form'
+import {yupResolver} from '@hookform/resolvers/yup'
+import {ControlFormField} from '../../components/FormField/FormField'
+import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
+import {Slides} from '../../pages/AuthenticatePage'
 import {authApi, ISignUpPayload} from '../../services/api/authApi'
-import {getHelp, getValidateStatus } from '../../utils/validateHelper';
+import {getHelp, getValidateStatus } from '../../utils/validateHelper'
 
 interface IRegisterFormProps {
   setSlide: (slide: number) => void

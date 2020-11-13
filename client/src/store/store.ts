@@ -1,8 +1,8 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import {todosReducer } from './ducks/todos/reducer'
-import { ITodosState } from './ducks/todos/types/state';
-import { rootSaga } from './saga';
+import {todosReducer} from './ducks/todos/reducer'
+import {ITodosState} from './ducks/todos/types/state'
+import {rootSaga} from './saga'
 
 const rootReducer = combineReducers<IRootState>({
   todos: todosReducer

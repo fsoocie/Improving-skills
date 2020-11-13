@@ -7,7 +7,7 @@ export interface IUser {
   email: string | undefined,
   confirmHash?: string,
   isConfirmed?: boolean,
-  googleId?: string
+  googleId?: string | null
 }
 
 export type IDocumentUser = IUser & Document
@@ -32,11 +32,7 @@ const schema: Schema<IDocumentUser> = new Schema({
     required: true,
     unique: true
   },
-  googleId: {
-    type: String,
-    unique: true
-  }
+  googleId: String
 })
-
 
 export default model<IDocumentUser>('User', schema)
