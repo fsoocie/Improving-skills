@@ -1,6 +1,6 @@
-import produce from 'immer'
-import { ITodosState } from './types/state'
-
+import produce, {setAutoFreeze} from 'immer'
+import {ITodosState} from './types/state'
+setAutoFreeze(false)
 const initialTodosState: ITodosState = {
   tasks: [
     {
@@ -38,7 +38,7 @@ const initialTodosState: ITodosState = {
 
 export const todosReducer = produce((draft, action) => {
   switch (action.type) {
-    case 'SET_TASKS':
-      draft.tasks = action.payload
+    case 'SET_COLUMNS':
+      draft.columns = action.payload
   }
 }, initialTodosState)
