@@ -1,5 +1,6 @@
 import produce, {setAutoFreeze} from 'immer'
-import {ITodosState} from './types/state'
+import {ITodosActionCreators, TodosActionTypes} from './types/actionCreators'
+import {IColumn, ITodosState} from './types/state'
 
 setAutoFreeze(false)
 const initialTodosState: ITodosState = {
@@ -15,31 +16,52 @@ const initialTodosState: ITodosState = {
     {
       id: 'task-3',
       content: 'task-3 text'
+    },
+    {
+      id: 'task-4',
+      content: 'task-4 text'
     }
   ],
   columns: [
     {
       id: 'column-1',
-      title: 'Example Title1',
-      taskIds: ['task-1', 'task-3']
+      title: 'Первая колонка',
+      taskIds: ['task-1', 'task-3', 'task-4']
     },
     {
       id: 'column-2',
-      title: 'Example Title2',
+      title: 'Вторая колонка',
       taskIds: ['task-2']
     },
     {
       id: 'column-3',
-      title: 'Example Title3',
+      title: 'Третья колонка',
       taskIds: []
     }
   ],
 }
 
-export const todosReducer = produce((draft, action) => {
+export const todosReducer = produce((draft: ITodosState, action: ITodosActionCreators) => {
   switch (action.type) {
-    case 'SET_COLUMNS':
+    case TodosActionTypes.SET_COLUMNS:
       draft.columns = action.payload
+      break;
+    case TodosActionTypes.ADD_TASK:
+      const {task, columnIndex} = action.payload
+      draft.tasks.push(task)
+      draft.columns[columnIndex].taskIds.push(task.id)
+      break;
+    case TodosActionTypes.SET_COLUMN_TITLE:
+      const {title, columnIndex: index} = action.payload
+      draft.columns[index].title = title
+      break;
+    case TodosActionTypes.ADD_COLUMN:
+      const column: IColumn = {
+        id: `column-${Date.now().toString()}`,
+        title: action.payload,
+        taskIds: []
+      }
+      draft.columns.push(column)
       break;
   }
 }, initialTodosState)

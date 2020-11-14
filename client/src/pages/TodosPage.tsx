@@ -1,17 +1,24 @@
-import React from 'react'
+import {PlusOutlined} from '@ant-design/icons'
+import {Button} from 'antd'
+import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {TodoList} from '../components/TodoList/TodoList'
-import {setColumns} from '../store/ducks/todos/actionCreators'
+import {addColumn, setColumns} from '../store/ducks/todos/actionCreators'
 import {selectTodosColumns} from '../store/ducks/todos/selectors'
 import {DragDropContext, Droppable, DropResult} from 'react-beautiful-dnd'
 import '../styles/Todos/TodosPage.scss'
 import {getNewColumns, getNewColumnsState} from '../utils/DNDHelper'
+import { AddColumnController } from '../components/AddColumnController/AddColumnController'
 
 export const TodosPage = () => {
-
   const dispatch = useDispatch()
-
   const columns = useSelector(selectTodosColumns)
+
+  const addColumnHandler = (title: string) => {
+    if (title) {
+      dispatch(addColumn(title))
+    }
+  }
 
   const onDragEnd = (result: DropResult) => {
     const {source, destination, type} = result
@@ -56,6 +63,9 @@ export const TodosPage = () => {
                   return <TodoList key={column.id} column={column} index={index}/>
               })}
               {provided.placeholder}
+              <AddColumnController
+                addColumnHandler={addColumnHandler}
+              />
             </div>
           )}
         </Droppable>

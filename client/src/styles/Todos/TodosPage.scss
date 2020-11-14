@@ -17,14 +17,24 @@
   border-radius: 2px;
   margin: 0 8px 8px 8px;
   padding: 8px;
+  height: fit-content;
 
   display: flex;
   flex-direction: column;
-  &__title {
+  justify-content: space-between;
+  &__title-block {
     height: 36px;
+  }
+  &__title {
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__content {
     width: 250px;
+  }
+  &__button {
+
   }
 }
 
@@ -35,4 +45,8 @@
   margin-bottom: 8px;
   padding: 8px;
   display: flex;
+}
+
+.addColumnBtn {
+  width: 266px;
 }
