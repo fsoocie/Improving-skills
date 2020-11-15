@@ -1,12 +1,13 @@
 import {Input} from 'antd'
-import React, {useState} from 'react'
+import TextArea from 'antd/es/input/TextArea'
+import React, {useState, FocusEvent} from 'react'
 import {Draggable, Droppable} from 'react-beautiful-dnd'
 import {useDispatch, useSelector} from 'react-redux'
 import {IColumn} from '../../store/ducks/todos/types/state'
 import {selectTodosTasks} from '../../store/ducks/todos/selectors'
 import {TodoListItem} from '../TodoListItem/TodoListItem'
 import Button from 'antd/lib/button/button'
-import {PlusOutlined} from '@ant-design/icons'
+import {CloseOutlined, PlusOutlined} from '@ant-design/icons'
 import {AddTaskForm} from '../AddTaskForm/AddTaskForm'
 import {addTask, setColumnTitle} from '../../store/ducks/todos/actionCreators'
 
@@ -20,6 +21,7 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
   const tasks = useSelector(selectTodosTasks)
   const [isActiveInput, setIsActiveInput] = useState<boolean>(false)
   const [isActiveTitle, setIsActiveTitle] = useState<boolean>(false)
+  const [title, setTitle] = useState<string>(column.title)
   const dispatch = useDispatch()
 
   function addTaskHandler(content: string) {
@@ -33,7 +35,7 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
     }
   }
 
-  function setTitleHandler(title: string) {
+  function setTitleHandler() {
     setIsActiveTitle(false)
     if (title) {
       dispatch(setColumnTitle(index, title))
@@ -50,8 +52,17 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
           <div className='todoList__title-block'
                {...provided.dragHandleProps} >
             { isActiveTitle
-              ? <Input autoFocus onPressEnter={e => setTitleHandler(e.currentTarget.value)}/>
-              : <h3 className='todoList__title' onClick={() => setIsActiveTitle(true)}>{column.title}</h3>
+              ? <TextArea
+                className='todoList__title-textarea'
+                autoSize
+                autoFocus
+                onFocus={(e: FocusEvent<HTMLTextAreaElement>) => e.target.setSelectionRange(0, title.length)}
+                value={title}
+                onPressEnter={() => setTitleHandler()}
+                onBlur={() => setTitleHandler()}
+                onChange={e => setTitle(e.currentTarget.value)}
+              />
+              : <h3 className='todoList__title-text' onClick={() => setIsActiveTitle(true)}>{column.title}</h3>
             }
           </div>
 
@@ -77,7 +88,8 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
           ? <AddTaskForm
               addTaskHandler={addTaskHandler}
             />
-          : <Button
+          :
+            <Button
               type='text'
               icon={<PlusOutlined />}
               className='todoList__button'

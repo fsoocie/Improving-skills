@@ -1,5 +1,6 @@
-import {PlusOutlined} from '@ant-design/icons'
+import {CloseOutlined, PlusOutlined} from '@ant-design/icons'
 import {Button} from 'antd'
+import Input from 'antd/es/input/Input'
 import TextArea from 'antd/es/input/TextArea'
 import React, {useState} from 'react'
 import './AddColumnController.scss'
@@ -14,7 +15,6 @@ export const AddColumnController: React.FC<IAddColumnControllerProps> = ({addCol
   const [title, setTitle] = useState<string>('')
 
   const onSubmitHandler = () => {
-    console.log(title)
     setIsActiveAddColumn(false)
     setTitle('')
     addColumnHandler(title)
@@ -24,21 +24,24 @@ export const AddColumnController: React.FC<IAddColumnControllerProps> = ({addCol
     <div className='addColumn'>
       {
         isActiveAddColumn
-          ? <>
-            <TextArea
+          ? <div className='addColumn__block'>
+            <Input
               onPressEnter={() => onSubmitHandler()}
               value={title}
               onChange={e => setTitle(e.target.value)}
-              className='addColumn__textarea'
+              className='addColumn__input'
               onBlur={() => setIsActiveAddColumn(false)}
               autoFocus
             />
             <Button
               className='addColumn__create-btn'
-              type='primary'
               onMouseDown={() => onSubmitHandler()}
             >Add column</Button>
-          </>
+            <CloseOutlined
+              className='addColumn__cancel-icon'
+              onMouseDown={() => setTitle('')}
+            />
+          </div>
           : <Button
             icon={<PlusOutlined />}
             className='addColumn__button'

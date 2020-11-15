@@ -1,0 +1,20 @@
+@mixin cancel-icon {
+  font-size: 20px;
+  color: #6b778c;
+  cursor: pointer;
+  &:hover {
+    color: #172b4d;
+  }
+}
+
+@mixin submit-button {
+  border-radius: 3px;
+  box-shadow: none;
+  background-color: #5aac44;
+  border: none;
+  color: #fff;
+  &:hover {
+    background-color: #61bd4f;
+    color: #fff;
+  }
+}

@@ -1,6 +1,8 @@
+import { CloseOutlined } from '@ant-design/icons'
 import {Button} from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import React, {useState} from 'react'
+import './AddTaskForm.scss'
 
 interface IAddTaskFormProps {
   addTaskHandler: (content: string) => void
@@ -11,8 +13,9 @@ export const AddTaskForm: React.FC<IAddTaskFormProps> = ({addTaskHandler}) => {
   const [taskContent, setTaskContent] = useState<string>('')
 
   return (
-    <div>
+    <div className='addTaskForm'>
       <TextArea
+        className='addTaskForm__textarea'
         value={taskContent}
         onChange={e => setTaskContent(e.target.value)}
         showCount
@@ -24,11 +27,15 @@ export const AddTaskForm: React.FC<IAddTaskFormProps> = ({addTaskHandler}) => {
       />
 
       <Button
-        type='primary'
+        className='addTaskForm__button'
         onClick={() => addTaskHandler(taskContent)}
       >
         Add task
       </Button>
+      <CloseOutlined
+        className='addTaskForm__cancel-icon'
+        onMouseDown={() => addTaskHandler('')}
+      />
 
     </div>
   )
