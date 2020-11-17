@@ -1,4 +1,14 @@
-import {IAddColumnAC, IAddTaskAC, ISetColumnsAC, ISetColumnTitleAC, TodosActionTypes} from './types/actionCreators'
+import {
+  IAddColumnAC,
+  IAddTaskAC,
+  IClearColumnAC,
+  IDeleteColumnAC,
+  IDeleteTaskAC,
+  ISetColumnsAC,
+  ISetColumnTitleAC,
+  IUpdateTaskAC,
+  TodosActionTypes
+} from './types/actionCreators'
 import {ITask, ITodosState} from './types/state'
 
 export const setColumns = (newColumnsState: ITodosState['columns']): ISetColumnsAC => {
@@ -15,4 +25,20 @@ export const setColumnTitle = (columnIndex: number, title: string): ISetColumnTi
 
 export const addColumn = (title: string): IAddColumnAC => {
   return {type: TodosActionTypes.ADD_COLUMN, payload: title}
+}
+
+export const deleteColumn = (colIndex: number): IDeleteColumnAC => {
+  return {type: TodosActionTypes.DELETE_COLUMN, payload: colIndex}
+}
+
+export const clearColumn = (colIndex: number): IClearColumnAC => {
+  return {type: TodosActionTypes.CLEAR_COLUMN, payload: colIndex}
+}
+
+export const updateTask = (id: string, content: string): IUpdateTaskAC => {
+  return {type: TodosActionTypes.UPDATE_TASK, payload: {id, content}}
+}
+
+export const deleteTask = (id: string): IDeleteTaskAC => {
+  return {type: TodosActionTypes.DELETE_TASK, payload: id}
 }

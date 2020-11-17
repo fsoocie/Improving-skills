@@ -26,6 +26,7 @@ export const AddColumnController: React.FC<IAddColumnControllerProps> = ({addCol
         isActiveAddColumn
           ? <div className='addColumn__block'>
             <Input
+              placeholder='Enter the new column`s title'
               onPressEnter={() => onSubmitHandler()}
               value={title}
               onChange={e => setTitle(e.target.value)}

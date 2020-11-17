@@ -1,15 +1,14 @@
-import {Input} from 'antd'
-import TextArea from 'antd/es/input/TextArea'
-import React, {useState, FocusEvent} from 'react'
+import React, {useState} from 'react'
 import {Draggable, Droppable} from 'react-beautiful-dnd'
 import {useDispatch, useSelector} from 'react-redux'
 import {IColumn} from '../../store/ducks/todos/types/state'
 import {selectTodosTasks} from '../../store/ducks/todos/selectors'
 import {TodoListItem} from '../TodoListItem/TodoListItem'
 import Button from 'antd/lib/button/button'
-import {CloseOutlined, PlusOutlined} from '@ant-design/icons'
+import { PlusOutlined} from '@ant-design/icons'
 import {AddTaskForm} from '../AddTaskForm/AddTaskForm'
 import {addTask, setColumnTitle} from '../../store/ducks/todos/actionCreators'
+import { ColumnTitle } from '../ColumnTitle/ColumnTitle'
 
 interface ITodoListProps {
   column: IColumn,
@@ -20,8 +19,6 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
 
   const tasks = useSelector(selectTodosTasks)
   const [isActiveInput, setIsActiveInput] = useState<boolean>(false)
-  const [isActiveTitle, setIsActiveTitle] = useState<boolean>(false)
-  const [title, setTitle] = useState<string>(column.title)
   const dispatch = useDispatch()
 
   function addTaskHandler(content: string) {
@@ -35,8 +32,7 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
     }
   }
 
-  function setTitleHandler() {
-    setIsActiveTitle(false)
+  function setTitleHandler(title: string) {
     if (title) {
       dispatch(setColumnTitle(index, title))
     }
@@ -49,21 +45,13 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
              {...provided.draggableProps}
              ref={provided.innerRef}
         >
-          <div className='todoList__title-block'
+          <div className='colTitle__block'
                {...provided.dragHandleProps} >
-            { isActiveTitle
-              ? <TextArea
-                className='todoList__title-textarea'
-                autoSize
-                autoFocus
-                onFocus={(e: FocusEvent<HTMLTextAreaElement>) => e.target.setSelectionRange(0, title.length)}
-                value={title}
-                onPressEnter={() => setTitleHandler()}
-                onBlur={() => setTitleHandler()}
-                onChange={e => setTitle(e.currentTarget.value)}
-              />
-              : <h3 className='todoList__title-text' onClick={() => setIsActiveTitle(true)}>{column.title}</h3>
-            }
+            <ColumnTitle
+              setTitleHandler={setTitleHandler}
+              initialTitle={column.title}
+              colIndex={index}
+            />
           </div>
 
 
@@ -92,7 +80,7 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
             <Button
               type='text'
               icon={<PlusOutlined />}
-              className='todoList__button'
+              className='todoList__add-task-button'
               onClick={setIsActiveInput.bind(null, true)}
             >
               Add task

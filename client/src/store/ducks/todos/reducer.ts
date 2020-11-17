@@ -63,5 +63,25 @@ export const todosReducer = produce((draft: ITodosState, action: ITodosActionCre
       }
       draft.columns.push(column)
       break;
+    case TodosActionTypes.DELETE_COLUMN:
+      draft.columns[action.payload].taskIds.forEach(taskId => {
+        draft.tasks = draft.tasks.filter(task => task.id !== taskId)
+      })
+      draft.columns.splice(action.payload, 1)
+      break;
+    case TodosActionTypes.CLEAR_COLUMN:
+      draft.columns[action.payload].taskIds.forEach(taskId => {
+        draft.tasks = draft.tasks.filter(task => task.id !== taskId)
+      })
+      draft.columns[action.payload].taskIds = []
+      break;
+    case TodosActionTypes.UPDATE_TASK:
+      const taskIndex = draft.tasks.findIndex(task => task.id === action.payload.id)
+      draft.tasks[taskIndex] = {id: action.payload.id, content: action.payload.content}
+      break;
+    case TodosActionTypes.DELETE_TASK:
+      const i = draft.tasks.findIndex(task => task.id === action.payload)
+      draft.tasks.splice(i, 1)
+      break;
   }
 }, initialTodosState)

@@ -15,6 +15,7 @@ export const AddTaskForm: React.FC<IAddTaskFormProps> = ({addTaskHandler}) => {
   return (
     <div className='addTaskForm'>
       <TextArea
+        placeholder='Enter new task`s text'
         className='addTaskForm__textarea'
         value={taskContent}
         onChange={e => setTaskContent(e.target.value)}

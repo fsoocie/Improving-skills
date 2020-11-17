@@ -73,3 +73,9 @@ export const TodosPage = () => {
     </div>
   )
 }
+
+// TODO: Drag-and-Drop Optimization
+// TODO: Drag-and-Drop background color
+// TODO: Edit and Delete task
+// TODO: Delete column
+// TODO: Add an ability to change BGC
