@@ -3,6 +3,7 @@ import {Button} from 'antd'
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {TodoList} from '../components/TodoList/TodoList'
+import {SideMenu} from '../modules/SideMenu/SideMenu'
 import {addColumn, setColumns} from '../store/ducks/todos/actionCreators'
 import {selectTodosColumns} from '../store/ducks/todos/selectors'
 import {DragDropContext, Droppable, DropResult} from 'react-beautiful-dnd'
@@ -51,7 +52,8 @@ export const TodosPage = () => {
   }
 
   return (
-    <div className='todosPage'>
+    <div className='todosPage' style={{display: 'flex'}}>
+      <SideMenu />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='cols-droppable' type='col' direction='horizontal'>
           {provided => (

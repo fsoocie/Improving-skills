@@ -18,33 +18,52 @@
 
 .todoList {
   background-color: #ebecf0;
-  border-radius: 2px;
+  border-radius: 3px;
   margin: 0 8px 8px 8px;
-  padding: 8px;
   height: fit-content;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  &__body {
+    padding: 8px;
+    border-radius: 3px;
+    &--isDraggingOver {
+      background-color: #FEEBE5;
+    }
+    &--isDraggingFrom {
+      background-color: #E7FCFF;
+    }
+  }
   &__content {
     width: 250px;
   }
   &__add-task-button {
     color: #5e6c84;
+    height: 30px;
+    width: 100%;
+    transition: none;
     &:hover {
       color: #172b4d
     };
+  }
+  &--draggable {
+    background-color: #E3FCEF;
   }
 }
 
 .colTitle {
   &__block {
-    width: 250px;
+    padding: 8px 8px 0 8px;
+    width: 100%;
     word-break: break-word;
     color: #202002;
 
     display: flex;
     justify-content: space-between;
+    border-radius: 3px;
+    &:hover {
+      background-color: #E3FCEF;
+    }
   }
   &__textarea {
     transition: none !important;
@@ -78,6 +97,7 @@
       svg {
         fill: #172b4d;
       }
+      background-color: #E3FCEF;
     }
   }
 
@@ -88,10 +108,10 @@
   display: flex;
   justify-content: space-between;
   border-radius: 3px;
-  min-height: 20px;
+  min-height: 42px;
   background: white;
-  margin-bottom: 6px;
   padding: 8px;
+  margin-bottom: 6px;
   word-break: break-word;
   font-size: 16px;
   line-height: 20px;

@@ -5,17 +5,18 @@ import {IColumn} from '../../store/ducks/todos/types/state'
 import {selectTodosTasks} from '../../store/ducks/todos/selectors'
 import {TodoListItem} from '../TodoListItem/TodoListItem'
 import Button from 'antd/lib/button/button'
-import { PlusOutlined} from '@ant-design/icons'
+import {PlusOutlined} from '@ant-design/icons'
 import {AddTaskForm} from '../AddTaskForm/AddTaskForm'
 import {addTask, setColumnTitle} from '../../store/ducks/todos/actionCreators'
-import { ColumnTitle } from '../ColumnTitle/ColumnTitle'
+import {ColumnTitle} from '../ColumnTitle/ColumnTitle'
+import classNames from 'classnames'
 
 interface ITodoListProps {
   column: IColumn,
   index: number
 }
 
-export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
+export const TodoList: React.FC<ITodoListProps> = React.memo(({column, index}) => {
 
   const tasks = useSelector(selectTodosTasks)
   const [isActiveInput, setIsActiveInput] = useState<boolean>(false)
@@ -40,8 +41,8 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
 
   return (
     <Draggable draggableId={column.id} index={index}>
-      {provided => (
-        <div className='todoList'
+      {(provided, snapshot) => (
+        <div className={classNames('todoList', {'todoList--draggable': snapshot.isDragging})}
              {...provided.draggableProps}
              ref={provided.innerRef}
         >
@@ -56,8 +57,9 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
 
 
           <Droppable droppableId={column.id} type={'task'}>
-            {provided => (
-              <div className="todoList__content"
+            {(provided, snap) => (
+              <div className={classNames('todoList__body', {'todoList__body--isDraggingOver': snap.isDraggingOver}, {'todoList__body--isDraggingFrom': !!snap.draggingFromThisWith && !snap.isDraggingOver})}>
+              <div className={classNames('todoList__content')}
                    {...provided.droppableProps}
                    ref={provided.innerRef}
               >
@@ -70,27 +72,28 @@ export const TodoList: React.FC<ITodoListProps> = ({column, index}) => {
 
                 {provided.placeholder}
               </div>
+                {isActiveInput
+                  ? <AddTaskForm
+                    addTaskHandler={addTaskHandler}
+                  />
+                  :
+                  <Button
+                    type='text'
+                    icon={<PlusOutlined />}
+                    className={classNames('todoList__add-task-button')}
+                    onClick={setIsActiveInput.bind(null, true)}
+                  >
+                    Add task
+                  </Button>
+                }
+              </div>
             )}
           </Droppable>
-          {isActiveInput
-          ? <AddTaskForm
-              addTaskHandler={addTaskHandler}
-            />
-          :
-            <Button
-              type='text'
-              icon={<PlusOutlined />}
-              className='todoList__add-task-button'
-              onClick={setIsActiveInput.bind(null, true)}
-            >
-              Add task
-            </Button>
-          }
         </div>
       )}
     </Draggable>
 
   )
-}
+})
 
 

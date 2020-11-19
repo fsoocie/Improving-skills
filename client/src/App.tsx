@@ -1,12 +1,15 @@
 import React from 'react'
 import 'antd/dist/antd.css'
+import {SideMenu} from './modules/SideMenu/SideMenu'
 import {AuthenticatePage} from './pages/AuthenticatePage'
 import {TodosPage} from './pages/TodosPage'
 
 
 export const App = () => {
   return (
+    <>
       <TodosPage />
+    </>
     /* <AuthenticatePage />*/
   );
 }
