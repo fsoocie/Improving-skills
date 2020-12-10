@@ -1,5 +1,6 @@
 import React from 'react'
 import './LoginForm.scss'
+import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -7,17 +8,13 @@ import {Button, Form, Typography} from 'antd'
 import {LockOutlined, MailOutlined} from '@ant-design/icons'
 import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
 import {Slides} from '../../pages/AuthenticatePage'
-import {authApi} from '../../services/api/authApi'
+import {authApi, ISignInPayload} from '../../services/api/authApi'
 import {getHelp, getValidateStatus} from '../../utils/validateHelper'
 import {ControlFormField} from '../../components/FormField/FormField'
+import { fetchSignIn } from '../../store/ducks/user/actionCreators'
 
 interface ILoginFormProps {
   setSlide: (slide: number) => void
-}
-
-interface ILoginFormFields {
-  email: string
-  password: string
 }
 
 const loginSchema = yup.object().shape({
@@ -30,19 +27,14 @@ const loginSchema = yup.object().shape({
 
 export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
 
-  const {getValues, control, handleSubmit, errors} = useForm<ILoginFormFields>({
+  const {getValues, control, handleSubmit, errors} = useForm<ISignInPayload>({
     resolver: yupResolver(loginSchema)
   })
   const formValues = getValues()
+  const dispatch = useDispatch()
 
-  const onSubmit = async (values: any) => {
-    const {status, data} = await authApi.signIn(values)
-    if (status === 'success') {
-      window.localStorage.setItem('Authorization', data.token)
-      window.history.pushState(null, 'string', '/home')
-    } else {
-      console.log('error login')
-    }
+  const onSubmit = (payload: ISignInPayload) => {
+    dispatch(fetchSignIn(payload))
   };
 
   return (

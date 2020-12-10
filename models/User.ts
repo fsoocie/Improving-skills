@@ -35,4 +35,11 @@ const schema: Schema<IDocumentUser> = new Schema({
   googleId: String
 })
 
+schema.methods.toJSON = function() {
+  const user = this.toObject();
+  delete user.password;
+  delete user.confirmHash
+  return user;
+}
+
 export default model<IDocumentUser>('User', schema)

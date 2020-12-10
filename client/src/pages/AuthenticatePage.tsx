@@ -2,9 +2,12 @@ import React, {useRef} from 'react'
 import classNames from 'classnames'
 import '../styles/Authenticate/AuthenticatePage.scss'
 import {Carousel} from 'antd'
+import {useSelector} from 'react-redux'
 import {LoginForm} from '../modules/LoginForm/LoginForm'
 import {RegisterForm} from '../modules/RegisterForm/RegisterForm'
 import {StartForm} from '../modules/StartForm/StartForm'
+import {selectIsAuth} from '../store/ducks/user/selectors'
+import { Redirect } from 'react-router-dom'
 
 export enum Slides {
   Start = 0,
@@ -17,6 +20,11 @@ export const AuthenticatePage = () => {
   const carouselRef = useRef<Carousel | null>(null)
   const setSlide = (slide: number) => {
     carouselRef.current!.goTo(slide)
+  }
+
+  const isAuth = useSelector(selectIsAuth)
+  if (isAuth) {
+    return <Redirect to='/todos'/>
   }
 
   return (

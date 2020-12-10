@@ -31,7 +31,6 @@ class UserCtrl {
           token: jwt.sign({data: user}, process.env.SECRET_KEY || 'SECRET_KEY')
         }})
     } catch (error) {
-      console.log(error)
       res.status(500).json({status: 'error', message: error})
     }
   }

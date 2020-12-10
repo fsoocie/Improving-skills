@@ -1,5 +1,6 @@
 import React from 'react'
 import './RegisterForm.scss'
+import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {Button, Form, Typography} from 'antd'
 import {LockOutlined, UserOutlined, MailOutlined} from '@ant-design/icons'
@@ -9,17 +10,11 @@ import {ControlFormField} from '../../components/FormField/FormField'
 import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
 import {Slides} from '../../pages/AuthenticatePage'
 import {authApi, ISignUpPayload} from '../../services/api/authApi'
+import {fetchSignUp} from '../../store/ducks/user/actionCreators'
 import {getHelp, getValidateStatus } from '../../utils/validateHelper'
 
 interface IRegisterFormProps {
   setSlide: (slide: number) => void
-}
-
-interface IRegisterFormFields {
-  username: string
-  email: string
-  password: string
-  password2: string
 }
 
 const registerSchema = yup.object().shape({
@@ -37,20 +32,14 @@ const registerSchema = yup.object().shape({
 
 export const RegisterForm: React.FC<IRegisterFormProps> = ({setSlide}) => {
 
-  const {control, handleSubmit, getValues, errors, formState} = useForm<IRegisterFormFields>({
+  const {control, handleSubmit, getValues, errors, formState} = useForm<ISignUpPayload>({
     resolver: yupResolver(registerSchema)
   })
   const formValues = getValues()
+  const dispatch = useDispatch()
 
-  const onSubmit = async (payload: ISignUpPayload) => {
-    console.log('Received values of REGISTER: ', payload);
-    const {status, data} = await authApi.signUp(payload)
-    if (status === 'success') {
-      window.localStorage.setItem('Authorization', data.token)
-      window.history.pushState(null, 'register', '/home')
-    } else {
-      console.log('error REGISTER')
-    }
+  const onSubmit = (payload: ISignUpPayload) => {
+    dispatch(fetchSignUp(payload))
   };
 
   return (

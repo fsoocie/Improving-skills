@@ -1,3 +1,4 @@
+import {IUser} from '../../../../models/User'
 import {axios} from '../../core/axios'
 
 interface IResponse<T> {
@@ -5,7 +6,7 @@ interface IResponse<T> {
   data: T
 }
 
-interface ISignInPayload {
+export interface ISignInPayload {
   email: string
   password: string
 }
@@ -25,5 +26,9 @@ export const authApi = {
   signUp: async (payload: ISignUpPayload): Promise<IResponse<{token: string}>> => {
     const {data} = await axios.post('/auth/register', payload)
     return data
+  },
+  me: async (): Promise<IUser> => {
+    const {data} = await axios.get('/auth/me')
+    return data.data
   }
 }

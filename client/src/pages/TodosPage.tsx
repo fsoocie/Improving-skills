@@ -9,9 +9,11 @@ import {selectTodosColumns} from '../store/ducks/todos/selectors'
 import {DragDropContext, Droppable, DropResult} from 'react-beautiful-dnd'
 import '../styles/Todos/TodosPage.scss'
 import {getNewColumns, getNewColumnsState} from '../utils/DNDHelper'
-import { AddColumnController } from '../components/AddColumnController/AddColumnController'
+import {AddColumnController} from '../components/AddColumnController/AddColumnController'
 
 export const TodosPage = () => {
+
+
   const dispatch = useDispatch()
   const columns = useSelector(selectTodosColumns)
 
@@ -75,9 +77,3 @@ export const TodosPage = () => {
     </div>
   )
 }
-
-// TODO: Drag-and-Drop Optimization
-// TODO: Drag-and-Drop background color
-// TODO: Edit and Delete task
-// TODO: Delete column
-// TODO: Add an ability to change BGC
