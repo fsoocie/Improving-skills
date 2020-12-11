@@ -1,18 +1,14 @@
-import {PlusOutlined} from '@ant-design/icons'
-import {Button} from 'antd'
-import React, {useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {TodoList} from '../components/TodoList/TodoList'
-import {SideMenu} from '../modules/SideMenu/SideMenu'
-import {addColumn, setColumns} from '../store/ducks/todos/actionCreators'
-import {selectTodosColumns} from '../store/ducks/todos/selectors'
+import React from 'react'
 import {DragDropContext, Droppable, DropResult} from 'react-beautiful-dnd'
-import '../styles/Todos/TodosPage.scss'
-import {getNewColumns, getNewColumnsState} from '../utils/DNDHelper'
-import {AddColumnController} from '../components/AddColumnController/AddColumnController'
+import {useDispatch, useSelector} from 'react-redux'
+import {AddColumnController} from '../../../components/AddColumnController/AddColumnController'
+import {TodoList} from '../../../components/TodoList/TodoList'
+import {addColumn, setColumns} from '../../../store/ducks/todos/actionCreators'
+import {selectTodosColumns} from '../../../store/ducks/todos/selectors'
+import '../../../styles/Todos/TodosPage.scss'
+import {getNewColumns, getNewColumnsState} from '../../../utils/DNDHelper'
 
-export const TodosPage = () => {
-
+export const Todos = () => {
 
   const dispatch = useDispatch()
   const columns = useSelector(selectTodosColumns)
@@ -55,11 +51,10 @@ export const TodosPage = () => {
 
   return (
     <div className='todosPage' style={{display: 'flex'}}>
-      <SideMenu />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='cols-droppable' type='col' direction='horizontal'>
+      <DragDropContext  onDragEnd={onDragEnd}>
+        <Droppable  droppableId='cols-droppable' type='col' direction='horizontal'>
           {provided => (
-            <div className="todoListsWrapper"
+            <div className="todoListsWrapper homeComponent"
                  {...provided.droppableProps}
                  ref={provided.innerRef}
             >

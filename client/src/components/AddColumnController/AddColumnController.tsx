@@ -1,7 +1,6 @@
 import {CloseOutlined, PlusOutlined} from '@ant-design/icons'
 import {Button} from 'antd'
 import Input from 'antd/es/input/Input'
-import TextArea from 'antd/es/input/TextArea'
 import React, {useState} from 'react'
 import './AddColumnController.scss'
 

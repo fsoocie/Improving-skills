@@ -6,7 +6,6 @@ import {useDispatch} from 'react-redux'
 import {deleteTask, updateTask} from '../../store/ducks/todos/actionCreators'
 import {ITask} from '../../store/ducks/todos/types/state'
 import classNames from 'classnames'
-import { ITodosActionCreators } from '../../store/ducks/todos/types/actionCreators'
 
 interface ITodoListItemProps {
   task: ITask,

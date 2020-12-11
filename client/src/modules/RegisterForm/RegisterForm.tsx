@@ -9,7 +9,7 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {ControlFormField} from '../../components/FormField/FormField'
 import {GoogleButton} from '../../components/GoogleButton/GoogleButton'
 import {Slides} from '../../pages/AuthenticatePage'
-import {authApi, ISignUpPayload} from '../../services/api/authApi'
+import {ISignUpPayload} from '../../services/api/authApi'
 import {fetchSignUp} from '../../store/ducks/user/actionCreators'
 import {getHelp, getValidateStatus } from '../../utils/validateHelper'
 

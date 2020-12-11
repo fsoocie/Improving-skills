@@ -7,7 +7,7 @@ import {LoginForm} from '../modules/LoginForm/LoginForm'
 import {RegisterForm} from '../modules/RegisterForm/RegisterForm'
 import {StartForm} from '../modules/StartForm/StartForm'
 import {selectIsAuth} from '../store/ducks/user/selectors'
-import { Redirect } from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
 export enum Slides {
   Start = 0,
@@ -24,7 +24,7 @@ export const AuthenticatePage = () => {
 
   const isAuth = useSelector(selectIsAuth)
   if (isAuth) {
-    return <Redirect to='/todos'/>
+    return <Redirect to='/' />
   }
 
   return (

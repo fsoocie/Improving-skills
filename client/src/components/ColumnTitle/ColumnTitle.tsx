@@ -1,12 +1,11 @@
-import {CloseOutlined} from '@ant-design/icons'
 import TextArea from 'antd/es/input/TextArea'
 import Dropdown from 'antd/lib/dropdown/dropdown'
 import Menu from 'antd/lib/menu'
 import React, {FocusEvent, useState} from 'react'
-import './ColumnTitle.scss'
 import {useDispatch} from 'react-redux'
 import {clearColumn, deleteColumn} from '../../store/ducks/todos/actionCreators'
-import { MoreOptionsIcon } from '../MoreOptionsIcon/MoreOptionsIcon'
+import {MoreOptionsIcon} from '../MoreOptionsIcon/MoreOptionsIcon'
+import './ColumnTitle.scss'
 
 interface IColumnTitleProps {
   setTitleHandler: (title: string) => void
@@ -60,9 +59,9 @@ export const ColumnTitle: React.FC<IColumnTitleProps> = ({setTitleHandler, initi
         : <>
           <h3 className='colTitle__text' onClick={() => setIsActiveTitle(true)}>{initialTitle}</h3>
           <Dropdown align={{offset: [0, 32]}} overlay={menu} placement='topLeft' overlayClassName='title-overlay' trigger={['click']}>
-            <a onClick={e => e.preventDefault()} style={{height: 24}}>
+            <div onClick={e => e.preventDefault()} style={{height: 24}}>
               <MoreOptionsIcon className='colTitle__icon'/>
-            </a>
+            </div>
           </Dropdown>
         </>
       }

@@ -2,11 +2,11 @@ import React, {useEffect} from 'react'
 import 'antd/dist/antd.css'
 import {useDispatch} from 'react-redux'
 import {AuthenticatePage} from './pages/AuthenticatePage'
-import {TodosPage} from './pages/TodosPage'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {authApi} from './services/api/authApi'
 import {setUser} from './store/ducks/user/actionCreators'
 import {PrivateRoute} from './utils/PrivateRoute'
+import { HomePage } from './pages/Home/HomePage'
 
 export const App = () => {
 
@@ -16,12 +16,14 @@ export const App = () => {
     authApi.me().then(userData => {
       dispatch(setUser(userData))
     })
-  }, [])
+  }, [dispatch])
 
   return (
-    <Router>
-      <Route path='/auth' component={AuthenticatePage}/>
-      <PrivateRoute path='/todos' component={TodosPage} />
-    </Router>
+    <div className='App'>
+      <Router>
+        <PrivateRoute path='/' component={HomePage} />
+        <Route path='/auth' component={AuthenticatePage}/>
+      </Router>
+    </div>
   );
 }

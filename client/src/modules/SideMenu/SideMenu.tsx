@@ -1,42 +1,82 @@
-import { AppstoreOutlined, ClockCircleOutlined, ContainerOutlined, DesktopOutlined,
+import {
+  ClockCircleOutlined,
+  ContainerOutlined,
   GoldOutlined,
   LogoutOutlined,
-  MailOutlined, PieChartOutlined, ThunderboltOutlined } from '@ant-design/icons'
-import { Menu } from 'antd'
-import SubMenu from 'antd/lib/menu/SubMenu'
+  ThunderboltOutlined
+} from '@ant-design/icons'
+import {Menu} from 'antd'
+import classNames from 'classnames'
 import React, {useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {Link, useLocation} from 'react-router-dom'
+import {userSignOut} from '../../store/ducks/user/actionCreators'
+import {selectUserData} from '../../store/ducks/user/selectors'
 import './SideMenu.scss'
+
 
 export const SideMenu: React.FC = () => {
 
   const [isCollapsed, setIsCollapsed] = useState(true)
 
+  const user = useSelector(selectUserData)
+  const location = useLocation()
+  const dispatch = useDispatch()
+
+  const onSignOutClick = () => {
+    window.localStorage.removeItem('Authorization')
+    dispatch(userSignOut())
+  }
+
+  const itemClassName = (classes: string[]) => (
+    classNames(
+      ...classes,
+      'sideMenu__item',
+      {'sideMenu__collapsed-item': isCollapsed},
+      {'sideMenu__uncollapsed-item': !isCollapsed}
+    )
+  )
+
   return (
-    <Menu
-      mode="inline"
-      theme="dark"
-      inlineCollapsed={isCollapsed}
-      onMouseEnter={() => setIsCollapsed(false)}
-      onMouseLeave={() => setIsCollapsed(true)}
-    >
-      <Menu.Item key="2">
-        fsoocie <LogoutOutlined />
-      </Menu.Item>
-      <Menu.Item key="3" icon={<ContainerOutlined />}>
-        Todos
-      </Menu.Item>
-      <Menu.Item>
-        Skills
-      </Menu.Item>
-      <Menu.Item icon={<ClockCircleOutlined />}>
-        Timer
-      </Menu.Item>
-      <Menu.Item icon={<ThunderboltOutlined />}>
-        Activities
-      </Menu.Item>
-      <Menu.Item icon={<GoldOutlined />}>
-        Skills
-      </Menu.Item>
-    </Menu>
+    <>
+      <Menu
+        mode="inline"
+        theme="dark"
+        inlineIndent={12}
+        selectedKeys={[location.pathname]}
+        className={classNames(
+          'sideMenu',
+          {'sideMenu__uncollapsed': !isCollapsed},
+          {'sideMenu__collapsed': isCollapsed})
+        }
+        inlineCollapsed={isCollapsed}
+        onMouseEnter={() => setIsCollapsed(false)}
+        onMouseLeave={() => setIsCollapsed(true)}
+      >
+        <Menu.Item disabled className={itemClassName(['username'])}>
+          {user.username.toUpperCase()}
+        </Menu.Item>
+
+        <Menu.Item key={'/'} className={itemClassName(['todos'])} icon={<ContainerOutlined />}>
+          <Link to='/'>Todos</Link>
+        </Menu.Item>
+
+        <Menu.Item key={'/timer'} className={itemClassName(['timer'])} icon={<ClockCircleOutlined />}>
+          <Link to='/timer'>Timer</Link>
+        </Menu.Item>
+
+        <Menu.Item key={'/activities'} className={itemClassName(['activities'])} icon={<ThunderboltOutlined />}>
+          <Link to='/activities'>Activities</Link>
+        </Menu.Item>
+
+        <Menu.Item key={'/skills'} className={itemClassName(['skills'])} icon={<GoldOutlined />}>
+          <Link to='/skills'>Skills</Link>
+        </Menu.Item>
+
+        <Menu.Item onClick={onSignOutClick} danger className={itemClassName(['sign-out'])} icon={<LogoutOutlined />}>
+          Sign Out
+        </Menu.Item>
+      </Menu>
+    </>
   )
 }

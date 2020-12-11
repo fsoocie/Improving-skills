@@ -67,7 +67,7 @@ export const TodoList: React.FC<ITodoListProps> = React.memo(({column, index}) =
                   const task = tasks.find(task => task.id === taskId)
                   if (task) {
                     return <TodoListItem key={task.id} task={task} index={index}/>
-                  }
+                  } return null
                 })}
 
                 {provided.placeholder}

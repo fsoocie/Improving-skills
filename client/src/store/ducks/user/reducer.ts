@@ -12,5 +12,8 @@ export const userReducer = produce((draft: IUserState, action: IUserActionCreato
     case UserActionTypes.SET_USER:
       draft.data = action.payload
       break;
+    case UserActionTypes.USER_SIGN_OUT:
+      draft.data = null
+      break;
   }
 }, initialUserState)
