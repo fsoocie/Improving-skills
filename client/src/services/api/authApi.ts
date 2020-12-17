@@ -1,7 +1,7 @@
 import {IUser} from '../../../../models/User'
 import {axios} from '../../core/axios'
 
-interface IResponse<T> {
+export interface IResponse<T> {
   status: string
   data: T
 }

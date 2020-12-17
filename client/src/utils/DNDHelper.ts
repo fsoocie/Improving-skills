@@ -11,7 +11,7 @@ export const getNewColumns = (result: DropResult, sourceColumn: IColumn, destCol
   const destIds = Array.from(destColumn.taskIds)
   destIds.splice(result.destination!.index, 0, removed)
   destColumn.taskIds = destIds
-  if (destColumn) {
+  if (sourceColumn) {
     return {newSourceColumn: sourceColumn, newDestColumn: destColumn}
   } return {newSourceColumn: destColumn}
 }

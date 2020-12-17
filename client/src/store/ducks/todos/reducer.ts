@@ -3,7 +3,7 @@ import {ITodosActionCreators, TodosActionTypes} from './types/actionCreators'
 import {IColumn, ITodosState} from './types/state'
 
 setAutoFreeze(false)
-const initialTodosState: ITodosState = {
+/*const initialTodosState: ITodosState = {
   tasks: [
     {
       id: 'task-1',
@@ -39,6 +39,11 @@ const initialTodosState: ITodosState = {
       taskIds: []
     }
   ],
+}*/
+
+const initialTodosState: ITodosState = {
+  tasks: [],
+  columns: []
 }
 
 export const todosReducer = produce((draft: ITodosState, action: ITodosActionCreators) => {

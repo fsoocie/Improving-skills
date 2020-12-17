@@ -2,6 +2,7 @@ import {config} from 'dotenv'; config()
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes'
+import todosRoutes from './routes/todos.routes'
 import connect from './core/database'
 import {passport} from "./core/passport";
 
@@ -10,6 +11,7 @@ app.use(express.json())
 app.use(passport.initialize())
 
 app.use('/auth', authRoutes)
+app.use('/todos', todosRoutes)
 
 connect(() => {
   const PORT = process.env.PORT || 5000

@@ -1,5 +1,6 @@
 import {takeEvery, call, put} from 'redux-saga/effects'
 import {authApi} from '../../../services/api/authApi'
+import {todosApi} from '../../../services/api/todosApi'
 import {setUser} from './actionCreators'
 import {IFetchSignIn, IFetchSignUp, UserActionTypes} from './types/actionCreators'
 import {message, style} from '../../../core/antd'
@@ -28,6 +29,7 @@ function* fetchSignUpRequest(action: IFetchSignUp) {
     const {data} = yield call(authApi.signUp, action.payload)
     window.localStorage.setItem('Authorization', data.token)
     const userData: IUser = yield call(authApi.me)
+    yield call(todosApi.create)
     yield put(setUser(userData))
 
     message.success({

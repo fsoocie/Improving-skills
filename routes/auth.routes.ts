@@ -15,9 +15,7 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login'}),
   UserController.afterGoogleLogin);
 
-
 router.post('/register', registerValidator, UserController.register)
 router.post('/local', passport.authenticate('local'), UserController.afterLocalLogin)
-
 
 export default router
