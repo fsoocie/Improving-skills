@@ -3,7 +3,7 @@ import Dropdown from 'antd/lib/dropdown/dropdown'
 import Menu from 'antd/lib/menu'
 import React, {FocusEvent, useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {clearColumn, deleteColumn} from '../../store/ducks/todos/actionCreators'
+import {fetchClearColumn, fetchDeleteColumn} from '../../store/ducks/todos/actionCreators'
 import {MoreOptionsIcon} from '../MoreOptionsIcon/MoreOptionsIcon'
 import './ColumnTitle.scss'
 
@@ -23,14 +23,14 @@ export const ColumnTitle: React.FC<IColumnTitleProps> = ({setTitleHandler, initi
       <Menu.Item
         key="0"
         onClick={() => {
-          dispatch(deleteColumn(colIndex))
+          dispatch(fetchDeleteColumn(colIndex))
         }}
       >
         Delete column
       </Menu.Item>
       <Menu.Item key="1"
         onClick={() => {
-          dispatch(clearColumn(colIndex))
+          dispatch(fetchClearColumn(colIndex))
         }}
       >Clear column</Menu.Item>
     </Menu>

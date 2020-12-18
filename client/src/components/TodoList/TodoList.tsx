@@ -7,16 +7,16 @@ import {TodoListItem} from '../TodoListItem/TodoListItem'
 import Button from 'antd/lib/button/button'
 import {PlusOutlined} from '@ant-design/icons'
 import {AddTaskForm} from '../AddTaskForm/AddTaskForm'
-import {addTask, setColumnTitle} from '../../store/ducks/todos/actionCreators'
+import {fetchAddTask, fetchSetColumnTitle} from '../../store/ducks/todos/actionCreators'
 import {ColumnTitle} from '../ColumnTitle/ColumnTitle'
 import classNames from 'classnames'
 
 interface ITodoListProps {
   column: IColumn,
-  index: number
+  columnIndex: number
 }
 
-export const TodoList: React.FC<ITodoListProps> = React.memo(({column, index}) => {
+export const TodoList: React.FC<ITodoListProps> = React.memo(({column, columnIndex}) => {
 
   const tasks = useSelector(selectTodosTasks)
   const [isActiveInput, setIsActiveInput] = useState<boolean>(false)
@@ -26,21 +26,21 @@ export const TodoList: React.FC<ITodoListProps> = React.memo(({column, index}) =
     setIsActiveInput(false)
     if (content) {
       const task = {
-        id: `task-${Date.now().toString()}`,
+        _id: `task-${Date.now().toString()}`,
         content
       }
-      dispatch(addTask(task, index))
+      dispatch(fetchAddTask(task, columnIndex))
     }
   }
 
   function setTitleHandler(title: string) {
     if (title) {
-      dispatch(setColumnTitle(index, title))
+      dispatch(fetchSetColumnTitle(columnIndex, title))
     }
   }
 
   return (
-    <Draggable draggableId={column.id} index={index}>
+    <Draggable draggableId={column._id} index={columnIndex}>
       {(provided, snapshot) => (
         <div className={classNames('todoList', {'todoList--draggable': snapshot.isDragging})}
              {...provided.draggableProps}
@@ -51,12 +51,11 @@ export const TodoList: React.FC<ITodoListProps> = React.memo(({column, index}) =
             <ColumnTitle
               setTitleHandler={setTitleHandler}
               initialTitle={column.title}
-              colIndex={index}
+              colIndex={columnIndex}
             />
           </div>
 
-
-          <Droppable droppableId={column.id} type={'task'}>
+          <Droppable droppableId={column._id} type={'task'}>
             {(provided, snap) => (
               <div className={classNames('todoList__body', {'todoList__body--isDraggingOver': snap.isDraggingOver}, {'todoList__body--isDraggingFrom': !!snap.draggingFromThisWith && !snap.isDraggingOver})}>
               <div className={classNames('todoList__content')}
@@ -64,9 +63,9 @@ export const TodoList: React.FC<ITodoListProps> = React.memo(({column, index}) =
                    ref={provided.innerRef}
               >
                 {column.taskIds.map((taskId, index) => {
-                  const task = tasks.find(task => task.id === taskId)
+                  const task = tasks.find(task => task._id === taskId)
                   if (task) {
-                    return <TodoListItem key={task.id} task={task} index={index}/>
+                    return <TodoListItem key={task._id} task={task} index={index} columnIndex={columnIndex}/>
                   } return null
                 })}
 

@@ -1,15 +1,18 @@
+import { LoadingStatus } from "../../../types";
+
 export interface IColumn {
-  id: string,
+  _id: string,
   title: string,
   taskIds: string[]
 }
 
 export interface ITask {
-  id: string,
+  _id: string,
   content: string
 }
 
 export interface ITodosState {
   columns: IColumn[],
   tasks: ITask[],
+  loadingStatus: LoadingStatus
 }

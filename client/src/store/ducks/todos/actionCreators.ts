@@ -7,7 +7,7 @@ import {
   IFetchAddColumnAC,
   IFetchAddTaskAC,
   IFetchClearColumnAC,
-  IFetchColumnsAC,
+  IFetchTodosAC,
   IFetchDeleteColumnAC,
   IFetchDeleteTaskAC,
   IFetchSetColumnsAC,
@@ -15,10 +15,15 @@ import {
   IFetchUpdateTaskAC,
   ISetColumnsAC,
   ISetColumnTitleAC,
+  ISetTodosAC,
   IUpdateTaskAC,
   TodosActionTypes
 } from './types/actionCreators'
-import {ITask, ITodosState} from './types/state'
+import {IColumn, ITask, ITodosState} from './types/state'
+
+export const setTodos = (payload: ITodosState): ISetTodosAC => {
+  return {type: TodosActionTypes.SET_TODOS, payload}
+}
 
 export const setColumns = (newColumnsState: ITodosState['columns']): ISetColumnsAC => {
   return {type: TodosActionTypes.SET_COLUMNS, payload: newColumnsState}
@@ -28,12 +33,12 @@ export const addTask = (task: ITask, columnIndex: number): IAddTaskAC => {
   return {type: TodosActionTypes.ADD_TASK, payload: {columnIndex, task}}
 }
 
-export const setColumnTitle = (columnIndex: number, title: string): ISetColumnTitleAC => {
+export const setColumnTitle = (title: string, columnIndex: number): ISetColumnTitleAC => {
   return {type: TodosActionTypes.SET_COLUMN_TITLE, payload: {columnIndex, title}}
 }
 
-export const addColumn = (title: string): IAddColumnAC => {
-  return {type: TodosActionTypes.ADD_COLUMN, payload: title}
+export const addColumn = (column: IColumn): IAddColumnAC => {
+  return {type: TodosActionTypes.ADD_COLUMN, payload: column}
 }
 
 export const deleteColumn = (colIndex: number): IDeleteColumnAC => {
@@ -44,16 +49,16 @@ export const clearColumn = (colIndex: number): IClearColumnAC => {
   return {type: TodosActionTypes.CLEAR_COLUMN, payload: colIndex}
 }
 
-export const updateTask = (id: string, content: string): IUpdateTaskAC => {
-  return {type: TodosActionTypes.UPDATE_TASK, payload: {id, content}}
+export const updateTask = (_id: string, content: string): IUpdateTaskAC => {
+  return {type: TodosActionTypes.UPDATE_TASK, payload: {_id, content}}
 }
 
-export const deleteTask = (id: string): IDeleteTaskAC => {
-  return {type: TodosActionTypes.DELETE_TASK, payload: id}
+export const deleteTask = (_id: string, columnIndex: number): IDeleteTaskAC => {
+  return {type: TodosActionTypes.DELETE_TASK, payload: {_id, columnIndex}}
 }
 
-export const fetchColumns = (): IFetchColumnsAC => {
-  return {type: TodosActionTypes.FETCH_COLUMNS}
+export const fetchTodos = (): IFetchTodosAC => {
+  return {type: TodosActionTypes.FETCH_TODOS}
 }
 
 export const fetchSetColumns = (newColumnsState: ITodosState['columns']): IFetchSetColumnsAC => {
@@ -80,10 +85,10 @@ export const fetchClearColumn = (colIndex: number): IFetchClearColumnAC => {
   return {type: TodosActionTypes.FETCH_CLEAR_COLUMN, payload: colIndex}
 }
 
-export const fetchUpdateTask = (id: string, content: string): IFetchUpdateTaskAC => {
-  return {type: TodosActionTypes.FETCH_UPDATE_TASK, payload: {id, content}}
+export const fetchUpdateTask = (_id: string, content: string): IFetchUpdateTaskAC => {
+  return {type: TodosActionTypes.FETCH_UPDATE_TASK, payload: {_id, content}}
 }
 
-export const fetchDeleteTask = (id: string): IFetchDeleteTaskAC => {
-  return {type: TodosActionTypes.FETCH_DELETE_TASK, payload: id}
+export const fetchDeleteTask = (_id: string, columnIndex: number): IFetchDeleteTaskAC => {
+  return {type: TodosActionTypes.FETCH_DELETE_TASK, payload: {_id, columnIndex}}
 }

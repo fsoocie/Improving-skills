@@ -3,16 +3,17 @@ import TextArea from 'antd/lib/input/TextArea'
 import React, { useState } from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import {useDispatch} from 'react-redux'
-import {deleteTask, updateTask} from '../../store/ducks/todos/actionCreators'
+import {fetchDeleteTask, fetchUpdateTask} from '../../store/ducks/todos/actionCreators'
 import {ITask} from '../../store/ducks/todos/types/state'
 import classNames from 'classnames'
 
 interface ITodoListItemProps {
   task: ITask,
-  index: number
+  index: number,
+  columnIndex: number
 }
 
-export const TodoListItem: React.FC<ITodoListItemProps> = ({task, index}) => {
+export const TodoListItem: React.FC<ITodoListItemProps> = ({task, index, columnIndex}) => {
 
   const dispatch = useDispatch()
   const [isEdit, setIsEdit] = useState<boolean>(false)
@@ -22,15 +23,19 @@ export const TodoListItem: React.FC<ITodoListItemProps> = ({task, index}) => {
   const updateTaskHandler = () => {
     setIsEdit(false)
     if (taskContent) {
-      dispatch(updateTask(task.id, taskContent))
+      dispatch(fetchUpdateTask(task._id, taskContent))
     }
   }
 
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task._id} index={index}>
       {(provided) => (
         isEdit
-          ? <div className='editableItem'>
+          ? <div className='editableItem'
+                 ref={provided.innerRef}
+                 {...provided.dragHandleProps}
+                 {...provided.draggableProps}
+            >
             <TextArea
               placeholder='Enter new task`s text'
               className='addTaskForm__textarea'
@@ -44,7 +49,7 @@ export const TodoListItem: React.FC<ITodoListItemProps> = ({task, index}) => {
               onPressEnter={updateTaskHandler}
             />
             <DeleteOutlined
-              onMouseDown={() => dispatch(deleteTask(task.id))}
+              onMouseDown={() => dispatch(fetchDeleteTask(task._id, columnIndex))}
               className='editableItem__icon' />
           </div>
           : <div className={classNames('todoListItem', {'todoListItem--active': hovered})}

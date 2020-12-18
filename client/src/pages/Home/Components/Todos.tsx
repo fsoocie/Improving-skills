@@ -1,10 +1,11 @@
-import React from 'react'
+import Spin from 'antd/lib/spin'
+import React, {useEffect} from 'react'
 import {DragDropContext, Droppable, DropResult} from 'react-beautiful-dnd'
 import {useDispatch, useSelector} from 'react-redux'
 import {AddColumnController} from '../../../components/AddColumnController/AddColumnController'
 import {TodoList} from '../../../components/TodoList/TodoList'
-import {addColumn, fetchSetColumns, setColumns} from '../../../store/ducks/todos/actionCreators'
-import {selectTodosColumns} from '../../../store/ducks/todos/selectors'
+import {fetchAddColumn, fetchSetColumns, fetchTodos} from '../../../store/ducks/todos/actionCreators'
+import {selectTodosColumns, selectTodosIsLoading} from '../../../store/ducks/todos/selectors'
 import '../../../styles/Todos/TodosPage.scss'
 import {getNewColumns, getNewColumnsState} from '../../../utils/DNDHelper'
 
@@ -12,10 +13,15 @@ export const Todos = () => {
 
   const dispatch = useDispatch()
   const columns = useSelector(selectTodosColumns)
+  const isLoading = useSelector(selectTodosIsLoading)
+
+  useEffect(() => {
+    dispatch(fetchTodos())
+  }, [dispatch])
 
   const addColumnHandler = (title: string) => {
     if (title) {
-      dispatch(addColumn(title))
+      dispatch(fetchAddColumn(title))
     }
   }
 
@@ -36,8 +42,8 @@ export const Todos = () => {
       dispatch(fetchSetColumns(copyColumns))
       return;
     }
-    const sourceColumn = columns.find(col => col.id === source.droppableId)
-    const destColumn = columns.find(col => col.id === destination.droppableId)
+    const sourceColumn = columns.find(col => col._id === source.droppableId)
+    const destColumn = columns.find(col => col._id === destination.droppableId)
     if (sourceColumn && destColumn) {
       if (sourceColumn !== destColumn) {
         const {newSourceColumn, newDestColumn} = getNewColumns(result, {...sourceColumn}, {...destColumn})
@@ -58,13 +64,18 @@ export const Todos = () => {
                  {...provided.droppableProps}
                  ref={provided.innerRef}
             >
-              {columns.map((column, index) => {
-                  return <TodoList key={column.id} column={column} index={index}/>
-              })}
-              {provided.placeholder}
-              <AddColumnController
-                addColumnHandler={addColumnHandler}
-              />
+              {isLoading
+                ? <Spin size="large" className='todosSpinner' />
+                : <>
+                    {columns.map((column, index) => {
+                        return <TodoList key={column._id} column={column} columnIndex={index}/>
+                      })}
+                    {provided.placeholder}
+                    <AddColumnController
+                    addColumnHandler={addColumnHandler}
+                    />
+                  </>
+              }
             </div>
           )}
         </Droppable>

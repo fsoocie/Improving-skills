@@ -1,7 +1,8 @@
 import {Action} from 'redux'
-import {ITask, ITodosState} from './state'
+import {IColumn, ITask, ITodosState} from './state'
 
 export enum TodosActionTypes {
+  SET_TODOS = 'todos/SET_TODOS',
   SET_COLUMNS = 'todos/SET_COLUMNS',
   ADD_TASK = 'todos/ADD_TASK',
   SET_COLUMN_TITLE = 'todos/SET_COLUMN_TITLE',
@@ -10,7 +11,7 @@ export enum TodosActionTypes {
   CLEAR_COLUMN = 'todos/CLEAR_COLUMN',
   UPDATE_TASK = 'todos/UPDATE_TASK',
   DELETE_TASK = 'todos/DELETE_TASK',
-  FETCH_COLUMNS = 'todos/FETCH_COLUMNS',
+  FETCH_TODOS = 'todos/FETCH_TODOS',
   FETCH_SET_COLUMNS = 'todos/FETCH_SET_COLUMNS',
   FETCH_ADD_TASK = 'todos/FETCH_ADD_TASK',
   FETCH_COLUMN_TITLE = 'todos/FETCH_COLUMN_TITLE',
@@ -21,6 +22,9 @@ export enum TodosActionTypes {
   FETCH_DELETE_TASK = 'todos/FETCH_DELETE_TASK'
 }
 
+export interface ISetTodosAC extends Action<TodosActionTypes> {
+  type: TodosActionTypes.SET_TODOS, payload: ITodosState
+}
 
 export interface ISetColumnsAC extends Action<TodosActionTypes> {
   type: TodosActionTypes.SET_COLUMNS
@@ -45,7 +49,7 @@ export interface ISetColumnTitleAC extends Action<TodosActionTypes> {
 
 export interface IAddColumnAC extends Action<TodosActionTypes> {
   type: TodosActionTypes.ADD_COLUMN
-  payload: string
+  payload: IColumn
 }
 
 export interface IDeleteColumnAC extends Action<TodosActionTypes> {
@@ -61,18 +65,21 @@ export interface IClearColumnAC extends Action<TodosActionTypes> {
 export interface IUpdateTaskAC extends Action<TodosActionTypes> {
   type: TodosActionTypes.UPDATE_TASK
   payload: {
-    id: string
+    _id: string
     content: string
   }
 }
 
 export interface IDeleteTaskAC extends Action<TodosActionTypes> {
   type: TodosActionTypes.DELETE_TASK
-  payload: string
+  payload: {
+    _id: string,
+    columnIndex: number
+  }
 }
 
-export interface IFetchColumnsAC extends Action<TodosActionTypes> {
-  type: TodosActionTypes.FETCH_COLUMNS
+export interface IFetchTodosAC extends Action<TodosActionTypes> {
+  type: TodosActionTypes.FETCH_TODOS
 }
 
 export interface IFetchSetColumnsAC extends Action<TodosActionTypes> {
@@ -114,20 +121,23 @@ export interface IFetchClearColumnAC extends Action<TodosActionTypes> {
 export interface IFetchUpdateTaskAC extends Action<TodosActionTypes> {
   type: TodosActionTypes.FETCH_UPDATE_TASK
   payload: {
-    id: string
+    _id: string
     content: string
   }
 }
 
 export interface IFetchDeleteTaskAC extends Action<TodosActionTypes> {
   type: TodosActionTypes.FETCH_DELETE_TASK
-  payload: string
+  payload: {
+    _id: string,
+    columnIndex: number
+  }
 }
 
 export type ITodosActionCreators =
   ISetColumnsAC | IAddTaskAC | ISetColumnTitleAC
   | IAddColumnAC | IDeleteColumnAC | IClearColumnAC
-  | IUpdateTaskAC | IDeleteTaskAC | IFetchColumnsAC
+  | IUpdateTaskAC | IDeleteTaskAC | IFetchTodosAC
   | IFetchSetColumnsAC | IFetchAddTaskAC | IFetchSetColumnTitleAC
   | IFetchAddColumnAC | IFetchDeleteColumnAC | IFetchClearColumnAC
-  | IFetchUpdateTaskAC | IFetchDeleteTaskAC
+  | IFetchUpdateTaskAC | IFetchDeleteTaskAC | ISetTodosAC

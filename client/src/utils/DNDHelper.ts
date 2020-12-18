@@ -18,10 +18,10 @@ export const getNewColumns = (result: DropResult, sourceColumn: IColumn, destCol
 
 export const getNewColumnsState = (oldColumnsState: ITodosState['columns'], newSourceColumn: IColumn, newDestColumn?: IColumn): ITodosState['columns'] => {
   const newColumnsState = [...oldColumnsState]
-  const sourceIndex = oldColumnsState.findIndex((col: IColumn) => col.id === newSourceColumn.id)
+  const sourceIndex = oldColumnsState.findIndex((col: IColumn) => col._id === newSourceColumn._id)
   newColumnsState.splice(sourceIndex, 1, newSourceColumn)
   if (newDestColumn) {
-    const destIndex = oldColumnsState.findIndex((col: IColumn) => col.id === newDestColumn.id)
+    const destIndex = oldColumnsState.findIndex((col: IColumn) => col._id === newDestColumn._id)
     newColumnsState.splice(destIndex, 1, newDestColumn)
   }
   return newColumnsState

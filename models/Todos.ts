@@ -9,7 +9,7 @@ interface ITask {
 interface IColumn {
   _id: string,
   title: string,
-  taskIds: ITask[]
+  taskIds: string[]
 }
 
 interface ITodos {
