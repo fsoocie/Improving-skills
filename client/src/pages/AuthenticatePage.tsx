@@ -1,6 +1,6 @@
 import React, {useRef} from 'react'
 import classNames from 'classnames'
-import '../styles/Authenticate/AuthenticatePage.scss'
+import '../styles/Pages/AuthenticatePage.scss'
 import {Carousel} from 'antd'
 import {useSelector} from 'react-redux'
 import {LoginForm} from '../modules/LoginForm/LoginForm'

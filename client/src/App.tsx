@@ -6,7 +6,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {authApi} from './services/api/authApi'
 import {setUser} from './store/ducks/user/actionCreators'
 import {PrivateRoute} from './utils/PrivateRoute'
-import { HomePage } from './pages/Home/HomePage'
+import {HomePage} from './pages/Home/HomePage'
+import './styles/index.scss'
 
 export const App = () => {
 

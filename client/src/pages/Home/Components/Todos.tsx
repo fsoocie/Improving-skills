@@ -6,7 +6,7 @@ import {AddColumnController} from '../../../components/AddColumnController/AddCo
 import {TodoList} from '../../../components/TodoList/TodoList'
 import {fetchAddColumn, fetchSetColumns, fetchTodos} from '../../../store/ducks/todos/actionCreators'
 import {selectTodosColumns, selectTodosIsLoading} from '../../../store/ducks/todos/selectors'
-import '../../../styles/Todos/TodosPage.scss'
+import '../../../styles/Pages/TodosPage.scss'
 import {getNewColumns, getNewColumnsState} from '../../../utils/DNDHelper'
 
 export const Todos = () => {

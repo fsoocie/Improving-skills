@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Link, useLocation} from 'react-router-dom'
 import {userSignOut} from '../../store/ducks/user/actionCreators'
 import {selectUserData} from '../../store/ducks/user/selectors'
+import { translateLocation } from '../../utils/translateLocation'
 import './SideMenu.scss'
 
 
@@ -43,7 +44,7 @@ export const SideMenu: React.FC = () => {
         mode="inline"
         theme="dark"
         inlineIndent={12}
-        selectedKeys={[location.pathname]}
+        selectedKeys={[translateLocation(location.pathname)]}
         className={classNames(
           'sideMenu',
           {'sideMenu__uncollapsed': !isCollapsed},

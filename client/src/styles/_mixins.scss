@@ -31,3 +31,30 @@
     color: #172b4d
   }
 }
+
+@mixin masteryHeader($color) {
+    padding: 20px;
+    background-color: $color;
+    color: white;
+    font-size: 1.6em;
+    border-radius: 6px 6px 0 0;
+    letter-spacing: 0.4px;
+}
+
+@mixin absoluteAddLink($bgc, $bgcHover) {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: 80px;
+  background-color: $bgc;
+  color: #fff;
+  transition: background-color .2s;
+  position: absolute;
+  bottom: 24px;
+  right: calc(50% - 20px);
+  &:hover {
+    background-color: $bgcHover
+  }
+}

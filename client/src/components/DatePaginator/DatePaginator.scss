@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+
+.date-paginator {
+  display: flex;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &__item {
+    padding: 6px 30px;
+    cursor: pointer;
+    color: $gray;
+    user-select: none;
+    &--active {
+      border-bottom: 3px solid $primary-activities;
+      color: $primary-activities;
+    }
+  }
+}
