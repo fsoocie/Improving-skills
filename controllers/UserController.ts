@@ -1,6 +1,6 @@
 import { config } from 'dotenv'; config()
 import express from 'express'
-import User, {IDocumentUser, IUser} from '../models/User'
+import User, {IDocumentUser} from '../models/User'
 import jwt from 'jsonwebtoken'
 import {createHash} from 'crypto'
 import transporter from '../core/nodemailer'

@@ -1,5 +1,5 @@
 import {Avatar, Button, Col, Descriptions, Row} from 'antd'
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {ArrowLeftOutlined, DeleteOutlined, UserOutlined} from '@ant-design/icons'
 import Title from 'antd/lib/typography/Title'

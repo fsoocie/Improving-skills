@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import UserController from "../controllers/UserController";
-import { passport } from '../core/passport';
+import {passport} from '../core/passport';
 import registerValidator from '../core/validators/register'
 const router = Router()
 
