@@ -58,3 +58,12 @@
     background-color: $bgcHover
   }
 }
+
+@mixin spinner($color) {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  .ant-spin-dot-item {
+    background-color: $color;
+  }
+}

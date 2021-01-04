@@ -32,7 +32,7 @@ class SkillsCtrl {
       const owner = req.user as IDocumentUser
       const data: ISkill = {
         name: req.body.name,
-        minutes: 0,
+        minutes: req.body.minutes || 0,
         img: req.body.img,
         description: req.body.description,
         owner: owner._id

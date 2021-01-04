@@ -31,12 +31,12 @@ export const ActivitiesList: React.FC = () => {
       <div className='activitiesList__content'>
         <ActivitiesWrapper colorShadow='rgba(191, 78, 48, .2)'>
           {mockActivities.map(activity => (
-            <ActivityItem activity={activity} />
+            <ActivityItem key={activity._id} activity={activity} />
           ))}
         </ActivitiesWrapper>
         <ActivitiesWrapper colorShadow='rgba(191, 78, 48, .2)'>
           {mockActivities.map(activity => (
-            <ActivityItem activity={activity} />
+            <ActivityItem key={activity._id} activity={activity} />
           ))}
         </ActivitiesWrapper>
       </div>

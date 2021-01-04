@@ -4,7 +4,7 @@ export interface ISkill {
   _id?: string
   name: string
   minutes: number
-  img: File
+  img: string
   description: string
   owner: string
   created_at?: Date
@@ -21,10 +21,7 @@ const schema = new Schema<IDocumentSkill>({
     type: Number,
     required: true
   },
-  img: {
-    type: Buffer,
-    required: false
-  },
+  img: String,
   description: String,
   owner: {
     type: Schema.Types.ObjectId,

@@ -8,12 +8,7 @@
 }
 
 .todosSpinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  .ant-spin-dot-item {
-    background-color: #fadadd;
-  }
+  @include spinner(#fadadd)
 }
 
 .todoList-container {

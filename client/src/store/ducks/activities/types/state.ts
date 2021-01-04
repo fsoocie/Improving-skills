@@ -1,15 +1,13 @@
 import {LoadingStatus} from '../../../types'
 
-export interface ISkill {
+export interface IActivity {
   _id: string,
-  name: string,
-  minutes: number,
-  img: string,
   description: string,
+  minutes: number,
   created_at: Date
 }
 
-export interface ISkillsState {
-  skills: ISkill[],
+export interface IActivitiesState {
+  activities: IActivity[],
   loadingStatus: LoadingStatus
 }

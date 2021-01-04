@@ -8,6 +8,10 @@
   background-color: #EDEEF0;
 }
 
+.masterySpinner {
+  @include spinner($primary-skills);
+}
+
 .skillsHeader {
   @include masteryHeader($primary-skills);
   &__controls {
@@ -80,6 +84,9 @@
     }
   }
 }
+.ant-upload {
+  display: block !important;
+}
 
 .skillsItem {
   width: 100%;
@@ -95,6 +102,7 @@
     padding: 18px;
     height: calc(100% - 84px);
     overflow: auto;
+    position: relative;
   }
   &__createLink {
     @include absoluteAddLink($primary-skills, $primary-skills-lighter)
@@ -162,14 +170,16 @@
   &__name {
     margin-bottom: 0 !important;
     color: white !important;
+    padding-left: 2px;
   }
   &__status {
     line-height: 1;
     font-size: 0.7em;
     color: #eeeeee !important;
+    padding-left: 2px;
   }
   &__hours {
-    line-height: 1;
+    line-height: 1.4;
     font-size: 0.85em;
     color: #eeeeee !important;
   }

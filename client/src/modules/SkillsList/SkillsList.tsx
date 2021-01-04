@@ -1,58 +1,24 @@
 import {PlusOutlined} from '@ant-design/icons'
-import {Button, Col, Row} from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import {Col, Row} from 'antd'
+import Spin from 'antd/lib/spin'
+import React, {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {SkillItem} from '../../components/SkillItem/SkillItem'
+import {fetchSkills} from '../../store/ducks/skills/actionCreators'
+import {selectSkills, selectSkillsIsLoading} from '../../store/ducks/skills/selectors'
 
-interface SkillsListProps {
+export const SkillsList: React.FC = () => {
 
-}
+  const skills = useSelector(selectSkills)
+  const isLoading = useSelector(selectSkillsIsLoading)
+  const dispatch = useDispatch()
 
-const skills = [
-  {
-    _id: '1',
-    name: 'Programming',
-    hours: 200,
-    img: 'https://images.unsplash.com/photo-1608371322643-3c871d37607e?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    description: 'this skill should be very improving your life',
-    created_at: new Date(),
-  },
-  {
-    _id: '2',
-    name: 'Reading',
-    hours: 3,
-    img: 'https://images.unsplash.com/photo-1608369475960-4b463f0aaefa?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    description: 'reading is impposible to everyone',
-    created_at: new Date(),
-  },
-  {
-    _id: '3',
-    name: 'English',
-    hours: 51,
-    img: 'https://images.unsplash.com/photo-1608329857560-935ece43a7d2?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    description: 'english is good',
-    created_at: new Date(),
-  },
-  {
-    _id: '4',
-    name: 'English2',
-    hours: 4,
-    img: 'https://images.unsplash.com/photo-1608329857560-935ece43a7d2?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    description: 'english is good',
-    created_at: new Date(),
-  },
-  {
-    _id: '5',
-    name: 'English4',
-    hours: 8,
-    img: 'https://images.unsplash.com/photo-1608329857560-935ece43a7d2?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-    description: 'english is good',
-    created_at: new Date(),
-  }
-]
+  useEffect(() => {
+    dispatch(fetchSkills())
+  }, [dispatch])
 
-export const SkillsList: React.FC<SkillsListProps> = () => {
   return (
     <MasteryBlock>
       <Row>
@@ -63,10 +29,15 @@ export const SkillsList: React.FC<SkillsListProps> = () => {
         </Col>
       </Row>
       <Row className='skillsList__inner'>
-        <Col span={24} >
-          {skills.map(skill => (
-            <SkillItem skill={skill} key={skill._id}/>
-          ))}
+        <Col span={24}>
+          {isLoading
+            ? <Spin size="large" className='masterySpinner' />
+            : [...skills]
+              .sort((a, b) => b.minutes - a.minutes)
+              .map(skill => (
+                <SkillItem skill={skill} key={skill._id}/>
+              ))
+          }
         </Col>
       </Row>
       <Link to='/skills/create' className='skillsList__createLink'><PlusOutlined style={{ fontSize: '18px', color: '#fff' }}/></Link>
