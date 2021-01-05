@@ -4,10 +4,22 @@ import Skill from '../models/Skill'
 import {IDocumentUser} from '../models/User'
 
 class ActivitiesCtrl {
+  async getAllBySkill(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      const activities = await Activity
+        .find({skill: req.params._id})
+        .populate('skill').exec()
+      res.status(200).json({status: 'success', data: activities})
+    } catch (e) {
+      res.status(500).json({status: 'error', message: e.message})
+    }
+  }
   async getAllByMonth(req: express.Request, res: express.Response): Promise<void> {
     const owner = req.user as IDocumentUser
     try {
-      const activities = await Activity.find({month: req.body.month, owner: owner._id})
+      const activities = await Activity
+        .find({month: Number(req.params.month), owner: owner._id})
+        .populate('skill').exec()
       res.status(200).json({status: 'success', data: activities})
     } catch (e) {
       res.status(500).json({status: 'error', message: e.message})

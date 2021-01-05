@@ -12,6 +12,10 @@
   @include spinner($primary-skills);
 }
 
+.activitiesSpinner {
+  @include spinner($primary-activities)
+}
+
 .skillsHeader {
   @include masteryHeader($primary-skills);
   &__controls {
@@ -103,6 +107,11 @@
     height: calc(100% - 84px);
     overflow: auto;
     position: relative;
+    .ant-empty {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+    }
   }
   &__createLink {
     @include absoluteAddLink($primary-skills, $primary-skills-lighter)

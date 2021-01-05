@@ -1,44 +1,41 @@
 import {PlusOutlined} from '@ant-design/icons'
-import React from 'react'
+import Empty from 'antd/lib/empty'
+import Spin from 'antd/lib/spin'
+import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
-import {ActivitiesWrapper} from '../../components/ActivitiesWrapper/ActivitiesWrapper'
-import {ActivityItem} from '../../components/ActivityItem/ActivityItem'
+import {ActivitiesListContent} from '../../components/ActivitiesListContent/ActivitiesListContent'
 import {DatePaginator} from '../../components/DatePaginator/DatePaginator'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
-
-const mockActivities = [
-  {
-    _id: '1',
-    description: 'description',
-    minutes: 50,
-    created_at: new Date()
-  },
-  {
-    _id: '2',
-    description: 'description can be more more mover r rfeorfkorefre',
-    minutes: 2,
-    created_at: new Date()
-  },
-]
+import {masteryAPI} from '../../services/api/masteryApi'
+import {IActivity} from '../../store/ducks/activities/types/state'
+import { getDataObj } from '../../utils/dateFunctions'
 
 export const ActivitiesList: React.FC = () => {
+
+  const [activities, setActivities] = useState<IActivity[] | null>(null)
+
+  const onChangeSelectHandler = (month: number) => {
+    setActivities(null)
+    masteryAPI.getActivitiesByMonth(month).then(data => setActivities(data))
+  }
+
+  useEffect(() => {
+    masteryAPI.getActivitiesByMonth(new Date().getMonth()).then(data => setActivities(data))
+  }, [])
+
   return (
     <MasteryBlock className='activitiesList'>
       <div className="activitiesHeader" style={{textAlign: 'center'}}>
         Activities
       </div>
-      <DatePaginator year={new Date().getFullYear()}/>
+      <DatePaginator onChangeSelectHandler={onChangeSelectHandler} dataObj={getDataObj(new Date())}/>
       <div className='activitiesList__content'>
-        <ActivitiesWrapper colorShadow='rgba(191, 78, 48, .2)'>
-          {mockActivities.map(activity => (
-            <ActivityItem key={activity._id} activity={activity} />
-          ))}
-        </ActivitiesWrapper>
-        <ActivitiesWrapper colorShadow='rgba(191, 78, 48, .2)'>
-          {mockActivities.map(activity => (
-            <ActivityItem key={activity._id} activity={activity} />
-          ))}
-        </ActivitiesWrapper>
+        {!activities
+          ? <Spin className='activitiesSpinner' />
+          : activities.length
+            ? <ActivitiesListContent type='activities' activities={activities} />
+            : <Empty description='There are not activities' />
+        }
       </div>
       <Link to='/activities/createActivity' className='activitiesList__link'><PlusOutlined style={{ fontSize: '18px', color: '#fff' }} /></Link>
     </MasteryBlock>

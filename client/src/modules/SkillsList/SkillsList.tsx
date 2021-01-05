@@ -1,5 +1,5 @@
 import {PlusOutlined} from '@ant-design/icons'
-import {Col, Row} from 'antd'
+import {Col, Empty, Row} from 'antd'
 import Spin from 'antd/lib/spin'
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
@@ -32,11 +32,13 @@ export const SkillsList: React.FC = () => {
         <Col span={24}>
           {isLoading
             ? <Spin size="large" className='masterySpinner' />
-            : [...skills]
-              .sort((a, b) => b.minutes - a.minutes)
-              .map(skill => (
-                <SkillItem skill={skill} key={skill._id}/>
-              ))
+            : skills.length
+              ? [...skills]
+                .sort((a, b) => b.minutes - a.minutes)
+                .map(skill => (
+                  <SkillItem skill={skill} key={skill._id}/>
+                ))
+              : <Empty description='There are not skills here'/>
           }
         </Col>
       </Row>

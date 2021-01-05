@@ -1,10 +1,12 @@
 import {LoadingStatus} from '../../../types'
+import { ISkill } from '../../skills/types/state';
 
 export interface IActivity {
+  skill: ISkill,
   _id: string,
   description: string,
   minutes: number,
-  created_at: Date
+  createdAt: string
 }
 
 export interface IActivitiesState {

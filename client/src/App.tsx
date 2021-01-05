@@ -28,3 +28,7 @@ export const App = () => {
     </div>
   );
 }
+
+// Add delete skill detail
+// Add creating activity
+// Add timer

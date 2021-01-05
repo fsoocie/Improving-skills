@@ -1,5 +1,5 @@
 import {ArrowLeftOutlined, DeleteOutlined, FolderOutlined} from '@ant-design/icons'
-import {Avatar, Button, Col, Descriptions, Row} from 'antd'
+import {Avatar, Button, Col, Descriptions, Empty, Row} from 'antd'
 import Progress from 'antd/es/progress'
 import Spin from 'antd/lib/spin'
 import Text from 'antd/lib/typography/Text'
@@ -7,44 +7,33 @@ import Title from 'antd/lib/typography/Title'
 import classNames from 'classnames'
 import React, {useEffect, useState} from 'react'
 import {Link, useParams} from 'react-router-dom'
-import {ActivitiesWrapper} from '../../components/ActivitiesWrapper/ActivitiesWrapper'
-import {ActivityItem} from '../../components/ActivityItem/ActivityItem'
+import {ActivitiesListContent} from '../../components/ActivitiesListContent/ActivitiesListContent'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {masteryAPI} from '../../services/api/masteryApi'
 import {IActivity} from '../../store/ducks/activities/types/state'
 import {ISkill} from '../../store/ducks/skills/types/state'
+import { getCorrectDate, getDailyAverage, getHoursToNextLevel} from '../../utils/dateFunctions'
 import {getTimeData} from '../../utils/masteryConverter'
 
-interface SkillsDetailProps {
-  activities: IActivity[]
-}
-
-const mockActivities = [
-  {
-    _id: '1',
-    description: 'description',
-    minutes: 50,
-    created_at: new Date()
-  },
-  {
-    _id: '2',
-    description: 'description can be more more mover r rfeorfkorefre',
-    minutes: 2,
-    created_at: new Date()
-  },
-]
-
-export const SkillsDetail: React.FC<SkillsDetailProps> = ({activities= mockActivities}) => {
+export const SkillsDetail: React.FC = () => {
 
   const [tab, setTab] = useState<'activities'|'misc'>('activities')
   const {_id} = useParams<{_id: string}>()
   const [skill, setSkill] = useState<ISkill | null>(null)
+  const [activities, setActivities] = useState<IActivity[] | null>(null)
 
   const timeData = skill ? getTimeData(skill.minutes) : null
 
   useEffect(() => {
     masteryAPI.getOneSkill(_id).then(data => setSkill(data))
   }, [_id])
+
+  useEffect(() => {
+    if (skill) {
+      masteryAPI.getActivitiesBySkill(skill._id).then(data => setActivities(data))
+    }
+  }, [skill])
+
   return (
     <MasteryBlock>
       {!skill
@@ -91,32 +80,25 @@ export const SkillsDetail: React.FC<SkillsDetailProps> = ({activities= mockActiv
           {
             tab === 'activities'
               ? <div className='skillsDetail__activities'>
-                <ActivitiesWrapper colorShadow='rgba(2, 188, 132, .35)'>
-                  {activities.map(activity => (
-                    <ActivityItem key={activity._id} activity={activity}/>
-                  ))}
-                </ActivitiesWrapper>
-
-                <ActivitiesWrapper colorShadow='rgba(2, 188, 132, .35)'>
-                  {activities.map(activity => (
-                    <ActivityItem key={activity._id} activity={activity}/>
-                  ))}
-                </ActivitiesWrapper>
-              </div>
+                {!activities
+                  ? <Spin size="large" className='masterySpinner' />
+                  : activities.length
+                    ? <ActivitiesListContent activities={activities} />
+                    : <Empty style={{marginTop: 40}} description='No activities'/>
+                }
+                </div>
               : <div className='skillsDetail__misc'>
                 <div className="description">
                   <Title className='description__title' level={3}>Description</Title>
-                  <Text className='description__content'>Description some lalala l la la la lal al la a</Text>
+                  <Text className='description__content'>{skill.description}</Text>
                 </div>
 
                 <div className="times">
                   <Title className='times__title' level={3}>Times</Title>
                   <Descriptions className='times__content'>
-                    <Descriptions.Item span={24} label="Created">18.12.20</Descriptions.Item>
-                    <Descriptions.Item span={24} label="Daily average">416 Minute(s)</Descriptions.Item>
-                    <Descriptions.Item span={24} label="Till next level">0 Hour(s)</Descriptions.Item>
-                    <Descriptions.Item span={24} label="Est.time">0 Day(s)</Descriptions.Item>
-                    <Descriptions.Item span={24} label="Est.date">19.12.20</Descriptions.Item>
+                    <Descriptions.Item span={24} label="Created">{getCorrectDate(skill.createdAt)}</Descriptions.Item>
+                    <Descriptions.Item span={24} label="Daily average">{getDailyAverage(skill.createdAt, skill.minutes)} Minute(s)</Descriptions.Item>
+                    <Descriptions.Item span={24} label="Till next level">{getHoursToNextLevel(skill.minutes)} Hour(s)</Descriptions.Item>
                   </Descriptions>
                 </div>
               </div>

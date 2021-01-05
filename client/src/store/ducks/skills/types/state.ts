@@ -6,7 +6,7 @@ export interface ISkill {
   minutes: number,
   img: string,
   description: string,
-  created_at: Date
+  createdAt: string
 }
 
 export interface ISkillsState {

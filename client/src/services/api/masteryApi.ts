@@ -28,7 +28,11 @@ export const masteryAPI = {
     return data.data
   },
   async getActivitiesByMonth(month: number): Promise<IActivity[]> {
-    const {data} = await axios.post<IResponse<IActivity[]>>('/activities/', {month})
+    const {data} = await axios.get<IResponse<IActivity[]>>('/activities/month/' + month)
+    return data.data
+  },
+  async getActivitiesBySkill(_id: string): Promise<IActivity[]> {
+    const {data} = await axios.get<IResponse<IActivity[]>>('/activities/' + _id)
     return data.data
   },
   async upload(file: File): Promise<uploadResponse> {

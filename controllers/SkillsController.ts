@@ -33,7 +33,7 @@ class SkillsCtrl {
       const data: ISkill = {
         name: req.body.name,
         minutes: req.body.minutes || 0,
-        img: req.body.img,
+        img: req.body.img || null,
         description: req.body.description,
         owner: owner._id
       }
