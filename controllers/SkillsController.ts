@@ -1,4 +1,5 @@
 import express from 'express'
+import Activity from '../models/Activity'
 import Skill, {ISkill} from '../models/Skill'
 import {IDocumentUser} from '../models/User'
 
@@ -39,6 +40,16 @@ class SkillsCtrl {
       }
       const skill = await Skill.create(data)
       res.status(201).json({status: 'success', data: skill})
+    } catch (e) {
+      res.status(500).json({status: 'error', message: e.message})
+    }
+  }
+  async delete(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      const owner = req.user as IDocumentUser
+      await Skill.deleteOne({owner: owner._id, _id: req.params._id})
+      await Activity.deleteMany({owner: owner._id, skill: req.params._id})
+      res.status(200).json({status: 'success', data: 'Skill has been deleted!'})
     } catch (e) {
       res.status(500).json({status: 'error', message: e.message})
     }

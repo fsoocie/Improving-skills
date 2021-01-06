@@ -11,5 +11,6 @@ export interface IActivity {
 
 export interface IActivitiesState {
   activities: IActivity[],
+  month: number,
   loadingStatus: LoadingStatus
 }

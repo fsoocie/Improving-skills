@@ -17,5 +17,18 @@ export const skillsReducer = produce((draft: ISkillsState, action: ISkillsAction
       draft.loadingStatus = LoadingStatus.LOADED
       draft.skills = action.payload
       break;
+    case SkillsActionTypes.SET_DELETE_SKILL:
+      draft.skills = draft.skills.filter((skill) => skill._id !== action.payload)
+      break;
+    case SkillsActionTypes.SET_CREATE_SKILL:
+      draft.skills.push(action.payload)
+      break;
+    case SkillsActionTypes.ADD_MINUTES_TO_SKILL:
+      const skillIndex = draft.skills.findIndex(skill => skill._id === action.payload._id)
+      const skill = draft.skills[skillIndex]
+      if (skill) {
+        skill.minutes += action.payload.minutes
+      }
+      break;
   }
 }, initialSkillsState)

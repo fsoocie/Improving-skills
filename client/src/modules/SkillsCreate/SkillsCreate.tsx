@@ -6,7 +6,7 @@ import {Link, useHistory} from 'react-router-dom'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {message} from '../../core/antd'
 import {masteryAPI} from '../../services/api/masteryApi'
-import {createSkill} from '../../store/ducks/skills/actionCreators'
+import {fetchCreateSkill} from '../../store/ducks/skills/actionCreators'
 import './SkillsCreate.scss'
 
 
@@ -40,7 +40,7 @@ export const SkillsCreate: React.FC = () => {
     message.loading({content: 'Creating...', key: 'skill-create', duration: 0})
     if (image) {
       const {url: img} = await masteryAPI.upload(image.file)
-      dispatch(createSkill({...formFields, img, history}, afterCreatingCallback))
+      dispatch(fetchCreateSkill({...formFields, img, history}, afterCreatingCallback))
     } else {
       message.error({content: 'Icon is required!', key: 'skill-create'})
     }
@@ -105,6 +105,7 @@ export const SkillsCreate: React.FC = () => {
           </Form>
         </Col>
       </Row>
+
     </MasteryBlock>
   )
 }

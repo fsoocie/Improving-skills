@@ -6,7 +6,7 @@ export interface IActivity {
   description: string
   minutes: number
   month: number
-  created_at?: Date
+  createdAt: Date
   owner: string
 }
 export type IDocumentActivity = IActivity & Document
@@ -19,10 +19,11 @@ const schema = new Schema<IDocumentActivity>({
   description: String,
   minutes: Number,
   month: Number,
+  createdAt: Date,
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
-}, {timestamps: true})
+})
 
 export default model<IDocumentActivity>('Activity', schema)

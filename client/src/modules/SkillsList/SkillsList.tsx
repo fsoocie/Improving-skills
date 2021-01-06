@@ -7,16 +7,20 @@ import {Link} from 'react-router-dom'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {SkillItem} from '../../components/SkillItem/SkillItem'
 import {fetchSkills} from '../../store/ducks/skills/actionCreators'
-import {selectSkills, selectSkillsIsLoading} from '../../store/ducks/skills/selectors'
+import {selectSkills, selectSkillsIsLoading, selectSkillsLoadingStatus} from '../../store/ducks/skills/selectors'
+import {LoadingStatus} from '../../store/types'
 
 export const SkillsList: React.FC = () => {
 
   const skills = useSelector(selectSkills)
   const isLoading = useSelector(selectSkillsIsLoading)
+  const loadingStatus = useSelector(selectSkillsLoadingStatus)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchSkills())
+    if (!skills.length && loadingStatus === LoadingStatus.NEVER) {
+      dispatch(fetchSkills())
+    }
   }, [dispatch])
 
   return (

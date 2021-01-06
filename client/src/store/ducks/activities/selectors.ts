@@ -4,7 +4,9 @@ import {IActivitiesState} from './types/state'
 
 export const selectActivitiesState = (state: IRootState): IActivitiesState => state.activities
 
-export const selectActivities = (state: IRootState): IActivitiesState['activities'] => selectActivitiesState(state).activities
+export const selectActivitiesMonth = (state: IRootState): number => selectActivitiesState(state).month
+
+export const selectActivitiesList = (state: IRootState): IActivitiesState['activities'] => selectActivitiesState(state).activities
 
 export const selectActivitiesLoadingStatus = (state: IRootState): LoadingStatus => selectActivitiesState(state).loadingStatus
 

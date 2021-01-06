@@ -5,7 +5,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {AddColumnController} from '../../../components/AddColumnController/AddColumnController'
 import {TodoList} from '../../../components/TodoList/TodoList'
 import {fetchAddColumn, fetchSetColumns, fetchTodos} from '../../../store/ducks/todos/actionCreators'
-import {selectTodosColumns, selectTodosIsLoading} from '../../../store/ducks/todos/selectors'
+import {selectTodosColumns, selectTodosIsLoading, selectTodosLoadingStatus} from '../../../store/ducks/todos/selectors'
+import {LoadingStatus} from '../../../store/types'
 import '../../../styles/Pages/TodosPage.scss'
 import {getNewColumns, getNewColumnsState} from '../../../utils/DNDHelper'
 
@@ -14,9 +15,12 @@ export const Todos = () => {
   const dispatch = useDispatch()
   const columns = useSelector(selectTodosColumns)
   const isLoading = useSelector(selectTodosIsLoading)
+  const loadingStatus = useSelector(selectTodosLoadingStatus)
 
   useEffect(() => {
-    dispatch(fetchTodos())
+    if (loadingStatus === LoadingStatus.NEVER) {
+      dispatch(fetchTodos())
+    }
   }, [dispatch])
 
   const addColumnHandler = (title: string) => {

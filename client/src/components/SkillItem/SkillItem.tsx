@@ -28,12 +28,12 @@ export const SkillItem: React.FC<SkillItemProps> = ({skill}) => {
               : <Avatar size={70} icon={<FolderOutlined />} />
             }
           </Col>
-          <Col span={17} className='skillDescription'>
+          <Col span={16} className='skillDescription'>
             <Title level={3} className='skillDescription__name'>{skill.name}</Title>
             <Text className='skillDescription__status'>{status}</Text>
             <Text className='skillDescription__hours'>{hours} hour(s)</Text>
           </Col>
-          <Col span={3} className='skillLevel' >
+          <Col span={4} className='skillLevel' >
             <Title className='skillLevel__number' level={1} >{level}</Title>
             <Text className='skillLevel__text'>Level</Text>
           </Col>

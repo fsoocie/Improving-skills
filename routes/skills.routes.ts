@@ -7,5 +7,6 @@ const router = Router()
 router.get('/', passport.authenticate('jwt'), SkillsController.getAll)
 router.get('/:_id', passport.authenticate('jwt'), SkillsController.getOneById)
 router.post('/', passport.authenticate('jwt'), SkillsController.create)
+router.delete('/:_id', passport.authenticate('jwt'), SkillsController.delete)
 
 export default router

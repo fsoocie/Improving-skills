@@ -32,13 +32,16 @@ class ActivitiesCtrl {
         description: req.body.description,
         minutes: req.body.minutes,
         skill: req.body.skill,
-        month: new Date().getMonth(),
-        owner: owner._id
+        month: new Date(req.body.createdAt).getMonth(),
+        owner: owner._id,
+        createdAt: req.body.createdAt
       }
-      const activity = await Activity.create(data)
       const skill = await Skill.findById(data.skill)
       if (skill) {
         if (owner._id.toString() === skill.owner.toString()) {
+          const activity = await Activity.create(data)
+          skill.minutes = skill.minutes + data.minutes
+          await skill.save()
           res.status(201).json({status: 'success', data: activity})
           return;
         }

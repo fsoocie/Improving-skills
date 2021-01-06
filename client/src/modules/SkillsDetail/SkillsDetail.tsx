@@ -1,16 +1,19 @@
 import {ArrowLeftOutlined, DeleteOutlined, FolderOutlined} from '@ant-design/icons'
 import {Avatar, Button, Col, Descriptions, Empty, Row} from 'antd'
+import Popconfirm from 'antd/es/popconfirm'
 import Progress from 'antd/es/progress'
 import Spin from 'antd/lib/spin'
 import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 import classNames from 'classnames'
 import React, {useEffect, useState} from 'react'
-import {Link, useParams} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import {Link, useHistory, useParams} from 'react-router-dom'
 import {ActivitiesListContent} from '../../components/ActivitiesListContent/ActivitiesListContent'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {masteryAPI} from '../../services/api/masteryApi'
 import {IActivity} from '../../store/ducks/activities/types/state'
+import {fetchDeleteSkill} from '../../store/ducks/skills/actionCreators'
 import {ISkill} from '../../store/ducks/skills/types/state'
 import { getCorrectDate, getDailyAverage, getHoursToNextLevel} from '../../utils/dateFunctions'
 import {getTimeData} from '../../utils/masteryConverter'
@@ -21,8 +24,15 @@ export const SkillsDetail: React.FC = () => {
   const {_id} = useParams<{_id: string}>()
   const [skill, setSkill] = useState<ISkill | null>(null)
   const [activities, setActivities] = useState<IActivity[] | null>(null)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const timeData = skill ? getTimeData(skill.minutes) : null
+
+  const onDeleteHandler = () => {
+    dispatch(fetchDeleteSkill(_id))
+    history.push('/skills')
+  }
 
   useEffect(() => {
     masteryAPI.getOneSkill(_id).then(data => setSkill(data))
@@ -44,7 +54,14 @@ export const SkillsDetail: React.FC = () => {
               <div className='skillsHeader' style={{paddingBottom: 0, paddingTop: 6}}>
                 <div className="skillsHeader__controls">
                   <Link className="skillsHeader__arrowToBack" to='/skills'><ArrowLeftOutlined /></Link>
-                  <Button danger className="skillsHeader__delete" icon={<DeleteOutlined size={28}/>}/>
+                  <Popconfirm
+                    title="Are you sure？" okText="Yes" cancelText="No"
+                    okButtonProps={{danger: true, size: 'large'}}
+                    cancelButtonProps={{type: 'text', size: 'large'}}
+                    onConfirm={onDeleteHandler}
+                  >
+                    <Button danger className="skillsHeader__delete" icon={<DeleteOutlined size={28}/>}/>
+                  </Popconfirm>
                 </div>
                 <Row style={{paddingTop: 10}}>
                   {
