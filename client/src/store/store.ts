@@ -4,6 +4,8 @@ import {activitiesReducer} from './ducks/activities/reducer'
 import {IActivitiesState} from './ducks/activities/types/state'
 import {skillsReducer} from './ducks/skills/reducer'
 import {ISkillsState} from './ducks/skills/types/state'
+import {timerReducer} from './ducks/timer/reducer'
+import {ITimerState} from './ducks/timer/types/state'
 import {todosReducer} from './ducks/todos/reducer'
 import {ITodosState} from './ducks/todos/types/state'
 import {userReducer} from './ducks/user/reducer'
@@ -15,6 +17,7 @@ const rootReducer = combineReducers<IRootState>({
   user: userReducer,
   skills: skillsReducer,
   activities: activitiesReducer,
+  timer: timerReducer
 })
 
 export interface IRootState {
@@ -22,6 +25,7 @@ export interface IRootState {
   user: IUserState,
   skills: ISkillsState,
   activities: IActivitiesState,
+  timer: ITimerState
 }
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -6,7 +6,7 @@ import moment from 'moment'
 import { Moment } from 'moment'
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Link, useHistory} from 'react-router-dom'
+import {Link, useHistory, useLocation} from 'react-router-dom'
 import { ActivitiesSkillItem } from '../../components/ActivitiesSkillItem/ActivitiesSkillItem'
 import {MasteryBlock} from '../../components/MasteryBlock/MasteryBlock'
 import {message} from '../../core/antd'
@@ -24,10 +24,13 @@ interface IFormData {
 
 export const CreateActivity: React.FC = () => {
 
+  const location = useLocation<number>()
+  const timerMinutes = location.state
+
   const [isMainPage, setIsMainPage] = useState<boolean>(true)
   const [selectedSkill, setSelectedSkill] = useState<ISkill | null>(null)
   const [descriptionValue, setDescriptionValue] = useState<string>('')
-  const [minutesValue, setMinutesValue] = useState<number | null>(null)
+  const [minutesValue, setMinutesValue] = useState<number | null>(timerMinutes || null)
   const [dateValue, setDateValue] = useState<Moment | null>(moment(new Date()))
 
   const history = useHistory()

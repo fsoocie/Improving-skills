@@ -49,3 +49,19 @@ export const getDataObj = (date: Date ): IGetDataObj => {
     day: date.getDate()
   }
 }
+
+interface IGetTimerObject {
+  seconds: string,
+  minutes: string,
+  hours: string
+}
+
+const formatTime = (num: number): string => {
+  return num <= 9? '0' + num: String(num)
+}
+
+export const getTimerObject = (seconds: number): IGetTimerObject => ({
+  seconds: formatTime(seconds % 60),
+  minutes: formatTime(Math.floor((seconds % 3600) / 60)),
+  hours: formatTime(Math.floor(seconds / 3600))
+})

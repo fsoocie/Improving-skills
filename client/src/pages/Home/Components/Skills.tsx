@@ -7,6 +7,7 @@ import {SkillsList} from '../../../modules/SkillsList/SkillsList'
 import '../../../styles/Pages/SkillsPage.scss'
 
 export const Skills: React.FC = () => {
+  console.log('skills')
   return (
     <div className='masteryPage homeComponent'>
       <Switch>
