@@ -1,0 +1,54 @@
+.ant-carousel .slick-dots li.slick-active {
+    width: 180px;
+}
+
+.ant-carousel .slick-dots li {
+    width: 120px;
+    height: 16px;
+}
+.ant-carousel .slick-dots li button {
+    height: 100%;
+}
+
+.dots {
+    color: aqua;
+}
+
+.startPage {
+    background: linear-gradient(-90deg, #A2FDCB, #FFE18C, #CEB8FE);
+    animation: gradient 40s ease infinite;
+    flex-direction: column;
+}
+
+
+.loginPage {
+    background: linear-gradient(-45deg, #ee7752, #c52a5c, #0184a3, #11a389);
+    animation: gradient 20s ease infinite;
+}
+
+.registerPage {
+    background: linear-gradient(-80deg, #ee7752, purple, #23a6d5, darkred);
+    animation: gradient 20s ease infinite;
+}
+
+.authPage {
+    align-items: center;
+    background-size: 400% 400%;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+
+@keyframes gradient {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}

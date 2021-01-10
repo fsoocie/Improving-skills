@@ -1,0 +1,45 @@
+@import "../../styles/variables";
+
+.skillsItem {
+  cursor: pointer;
+  transition-duration: 0.05s;
+  .skillDescription {
+    display: flex;
+    flex-direction: column;
+    &__name {
+      margin: 0
+    }
+    &__status {
+      margin: 0;
+      color: #929292;
+      font-size: 1.1em ;
+      line-height: 1;
+    }
+    &__hours {
+      margin: 0;
+      color: #707080;
+      font-size: 1.2em
+    }
+  }
+  .skillLevel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__number {
+      margin: 0;
+      color: $gray-darkest;
+    }
+    &__text {
+      margin: 0;
+      font-size: 1.3em;
+      color: $gray-dark
+    }
+  }
+  .ant-progress-bg {
+    background-color: $primary-skills;
+    height: 12px !important;
+  }
+  &:hover {
+    background-color: #F9F9F9;
+  }
+}

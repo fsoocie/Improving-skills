@@ -1,0 +1,233 @@
+@import "../mixins";
+@import "../variables";
+
+.masteryPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EDEEF0;
+}
+
+.masterySpinner {
+  @include spinner($primary-skills);
+}
+
+.activitiesSpinner {
+  @include spinner($primary-activities)
+}
+
+.skillsHeader {
+  @include masteryHeader($primary-skills);
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+  }
+  &__arrowToBack {
+    color: white;
+    font-size: 22px;
+    &:hover {
+      color: $primary-skills-lighter
+    }
+  }
+  &__delete {
+    color: $primary-skills;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    &:hover, &:active, &:focus{
+      color: $primary-skills-lighter;
+    }
+  }
+
+  &__saveBtn {
+    color: $primary-skills;
+    border: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    &:hover, &:active, &:focus{
+      color: $primary-skills-lighter;
+    }
+  }
+}
+
+.createSkill {
+  &__input {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 2px solid $gray;
+    font-size: 1.2em;
+    box-shadow: none !important;
+    &:focus {
+      box-shadow: none;
+      border-bottom: 2px solid $primary-skills;
+    }
+  }
+}
+
+.selectIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 24px;
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, .1);
+  color: $gray;
+  &__text {
+    font-size: 1.8em;
+    margin-left: 30px;
+  }
+  &.ant-btn:focus, &.ant-btn:hover {
+    color: $primary-skills;
+  }
+  &:hover, &:focus, &:active {
+    box-shadow: 0 0 3px 3px rgba(2, 188, 132, .3);
+    .selectIcon__text {
+      color: $primary-skills;
+    }
+  }
+}
+.ant-upload {
+  display: block !important;
+}
+
+.skillsItem {
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+  padding: 10px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  background-color: white;
+}
+
+.skillsList {
+  &__inner {
+    padding: 18px;
+    height: calc(100% - 84px);
+    overflow: auto;
+    position: relative;
+    .ant-empty {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+    }
+  }
+  &__createLink {
+    @include absoluteAddLink($primary-skills, $primary-skills-lighter)
+  }
+}
+
+.skillsDetail {
+  &__activities {
+    height: calc(100% - 192px);
+    overflow: auto;
+    padding: 14px;
+  }
+  &__misc {
+    padding: 14px;
+    background-color: white;
+    .description {
+      padding: 12px;
+      margin-bottom: 18px;
+      box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+
+      &__title {
+        border-bottom: 1px rgba(0, 0, 0, .15) solid;
+        margin: 0;
+        padding-bottom: 4px;
+      }
+      &__content {
+        padding-top: 8px;
+        font-size: 1.1em;
+        display: inline-block;
+      }
+    }
+    .times {
+      background-color: white;
+      padding: 8px;
+      box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+      &__title {
+        border-bottom: 1px rgba(0, 0, 0, .15) solid;
+        margin: 0;
+        padding-bottom: 4px;;
+      }
+      &__content {
+        padding-top: 6px;
+        display: flex;
+        flex-direction: column;
+        .ant-descriptions-item {
+          padding-bottom: 2px;
+        }
+        .ant-descriptions-item-content {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.activityItem {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.skillsDetailContent {
+  display: flex;
+  flex-direction: column;
+  &__name {
+    margin-bottom: 0 !important;
+    color: white !important;
+    padding-left: 2px;
+  }
+  &__status {
+    line-height: 1;
+    font-size: 0.7em;
+    color: #eeeeee !important;
+    padding-left: 2px;
+  }
+  &__hours {
+    line-height: 1.4;
+    font-size: 0.85em;
+    color: #eeeeee !important;
+  }
+}
+
+.skillsDetailLevel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  &__number {
+    margin-bottom: 0 !important;
+    color: white !important;
+  }
+  &__text {
+    line-height: 1;
+    color: #eeeeee !important;
+  }
+}
+
+.tabs {
+  &__item {
+    border: none;
+    font-weight: bold;
+    border-radius: 0 !important;
+    transition-duration: 0s;
+    animation: none;
+    &::after {
+      display: none;
+    }
+    &:hover, &:active, &:focus {
+      color: #f1f1f1;
+      border-color: #f1f1f1;
+    }
+  }
+  &__item--active {
+    border-bottom: 4px white solid;
+  }
+}
+
+.ant-progress-bg {
+  height: 12px !important;
+}

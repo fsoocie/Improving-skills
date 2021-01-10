@@ -1,0 +1,28 @@
+@import "../../styles/variables";
+.activitiesWrapper {
+  background-color: #feffff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
+  margin-bottom: 24px;
+  border-radius: 6px;
+  padding: 8px;
+  &__content {
+    padding: 8px;
+  }
+}
+
+.activitiesWrapperHeader {
+  display: flex;
+  border-bottom: rgba(0, 0, 0, .1) 1px solid;
+  &__subDate {
+    display: flex;
+    flex-direction: column;
+    padding-left: 8px;
+    padding-top: 7px;
+    span {
+      color: $gray-dark
+    }
+  }
+  span {
+    line-height: 1.2;
+  }
+}
