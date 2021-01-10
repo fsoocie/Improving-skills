@@ -9,6 +9,7 @@ import uploadRoutes from './routes/upload.routes'
 import connect from './core/database'
 import {passport} from "./core/passport";
 import cors from 'cors'
+import path from 'path'
 
 const app: express.Application = express()
 app.use(express.json())
@@ -20,6 +21,10 @@ app.use('/todos', todosRoutes)
 app.use('/skills', skillsRoutes)
 app.use('/activities', activitiesRoutes)
 app.use('/upload', uploadRoutes)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build/static')))
+}
 
 connect(() => {
   const PORT = process.env.PORT || 5000
