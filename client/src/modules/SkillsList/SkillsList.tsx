@@ -21,7 +21,7 @@ export const SkillsList: React.FC = () => {
     if (!skills.length && loadingStatus === LoadingStatus.NEVER) {
       dispatch(fetchSkills())
     }
-  }, [dispatch])
+  }, [dispatch, loadingStatus, skills.length])
 
   return (
     <MasteryBlock>

@@ -21,7 +21,7 @@ export const Todos = () => {
     if (loadingStatus === LoadingStatus.NEVER) {
       dispatch(fetchTodos())
     }
-  }, [dispatch])
+  }, [dispatch, loadingStatus])
 
   const addColumnHandler = (title: string) => {
     if (title) {

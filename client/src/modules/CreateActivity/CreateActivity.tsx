@@ -79,9 +79,9 @@ export const CreateActivity: React.FC = () => {
           </div>
           <div className="createActivity__content">
             <Form  initialValues={{
-              ["description"]: descriptionValue,
-              ["minutes"]: minutesValue,
-              ["date"]: dateValue
+              description: descriptionValue,
+              minutes: minutesValue,
+              date: dateValue
             }} id='create-skill-form' onFinish={onFinish}>
               <Form.Item>
                 <Button onClick={() => setIsMainPage(false)} block className='selectSkillBtn' danger>

@@ -79,9 +79,12 @@ export const LoginForm: React.FC<ILoginFormProps> = ({setSlide}) => {
         </div>
       </Form.Item>
 
-      <Form.Item className='googleSignInItem'>
+      //TODO:URL
+      <a href='http://localhost:5000/auth/google'>
+        <Form.Item className='googleSignInItem'>
           <GoogleButton text='Sign In with Google' />
-      </Form.Item>
+        </Form.Item>
+      </a>
 
       <Typography.Link className='linkToRegister' type='secondary' onClick={setSlide.bind(null, Slides.Register)}>or Register</Typography.Link>
     </Form>

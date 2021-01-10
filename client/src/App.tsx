@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import 'antd/dist/antd.css'
 import {useDispatch} from 'react-redux'
 import {AuthenticatePage} from './pages/AuthenticatePage'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {authApi} from './services/api/authApi'
 import {setUser} from './store/ducks/user/actionCreators'
 import {PrivateRoute} from './utils/PrivateRoute'
@@ -22,8 +22,10 @@ export const App = () => {
   return (
     <div className='App'>
       <Router>
-        <PrivateRoute path='/' component={HomePage} />
-        <Route path='/auth' component={AuthenticatePage}/>
+        <Switch>
+          <Route path='/auth/:token?' component={AuthenticatePage}/>
+          <PrivateRoute path='/' component={HomePage} />
+        </Switch>
       </Router>
     </div>
   );

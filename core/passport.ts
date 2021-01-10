@@ -4,7 +4,8 @@ import {Strategy as GoogleStrategy} from 'passport-google-oauth20'
 import {Strategy as JWTStrategy, StrategyOptions} from 'passport-jwt'
 import {Strategy as LocalStrategy} from 'passport-local'
 import {ExtractJwt} from 'passport-jwt'
-import User, { IUser } from '../models/User'
+import TodosModel from '../models/Todos'
+import User, {IDocumentUser, IUser} from '../models/User'
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID!,
@@ -21,6 +22,13 @@ passport.use(new GoogleStrategy({
         confirmHash: createHash('md5').update(profile.emails![0].value + process.env.SECRET_KEY).digest('hex'),
       })
       await user.save()
+      const data = {
+        tasks: [],
+        columns: [],
+        owner: user._id
+      }
+      await TodosModel.create(data)
+      return cb(undefined, user)
     }
     return cb(undefined, user)
   } catch (error) {return cb(error, null)}

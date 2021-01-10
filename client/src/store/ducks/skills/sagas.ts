@@ -1,7 +1,7 @@
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {message, style} from '../../../core/antd'
 import {masteryAPI} from '../../../services/api/masteryApi'
-import {setActivities, setDeleteActivities} from '../activities/actionCreators'
+import {setDeleteActivities} from '../activities/actionCreators'
 import {setCreateSkill, setDeleteSkill, setSkills} from './actionCreators'
 import {IFetchCreateSkill, IFetchDeleteSkill, SkillsActionTypes} from './types/actionCreators'
 import { ISkill } from './types/state'

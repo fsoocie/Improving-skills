@@ -7,7 +7,7 @@ import {LoginForm} from '../modules/LoginForm/LoginForm'
 import {RegisterForm} from '../modules/RegisterForm/RegisterForm'
 import {StartForm} from '../modules/StartForm/StartForm'
 import {selectIsAuth} from '../store/ducks/user/selectors'
-import {Redirect} from 'react-router-dom'
+import {Redirect, useParams} from 'react-router-dom'
 
 export enum Slides {
   Start = 0,
@@ -17,6 +17,10 @@ export enum Slides {
 
 export const AuthenticatePage = () => {
 
+  const {token} = useParams<{token:string}>()
+  if (token) {
+    window.localStorage.setItem('Authorization', token)
+  }
   const carouselRef = useRef<Carousel | null>(null)
   const setSlide = (slide: number) => {
     carouselRef.current!.goTo(slide)

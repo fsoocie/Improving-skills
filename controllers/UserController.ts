@@ -70,20 +70,16 @@ class UserCtrl {
     }
   }
   async afterGoogleLogin(req: express.Request, res: express.Response): Promise<void> {
+    console.log('USER:', req.user)
     try {
+      console.log('USER:', req.user)
       const user = req.user? (req.user as IDocumentUser).toJSON() : undefined
       if (!user) {
         res.status(400).send()
       }
-      res.json({
-        status: 'success',
-        data: {
-          ...user,
-          token: jwt.sign({data: user}, process.env.SECRET_KEY || 'SECRET_KEY', {
-            expiresIn: '7d'
-          })
-        }
-      })
+      res.redirect(`http://localhost:3000/auth/${jwt.sign({data: user}, process.env.SECRET_KEY || 'SECRET_KEY', {
+        expiresIn: '7d'
+      })}`)
     } catch (error) {res.status(500).json({status: 'error', message: error.message})}
   }
   async afterLocalLogin(req: express.Request, res: express.Response): Promise<void> {

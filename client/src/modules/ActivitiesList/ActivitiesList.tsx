@@ -29,7 +29,7 @@ export const ActivitiesList: React.FC = () => {
   useEffect(() => {
     if (month === -1) {
       dispatch(fetchActivities(currentMonth))
-    }}, [month])
+    }}, [month, currentMonth, dispatch])
 
   return (
     <MasteryBlock className='activitiesList'>

@@ -1,4 +1,4 @@
-import {FolderOutlined, UserOutlined } from '@ant-design/icons'
+import {FolderOutlined} from '@ant-design/icons'
 import {Avatar, Col, Row} from 'antd'
 import Title from 'antd/lib/typography/Title'
 import React from 'react'

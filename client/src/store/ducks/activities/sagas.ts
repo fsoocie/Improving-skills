@@ -2,7 +2,7 @@ import {call, put, takeEvery} from 'redux-saga/effects'
 import {message, style} from '../../../core/antd'
 import {masteryAPI} from '../../../services/api/masteryApi'
 import {addMinutesToSkill} from '../skills/actionCreators'
-import {fetchActivities, fetchCreateActivity, setActivities} from './actionCreators'
+import {fetchActivities, setActivities} from './actionCreators'
 import {ActivitiesActionTypes, IFetchActivities, IFetchCreateActivity} from './types/actionCreators'
 
 const key = 'activities-saga'

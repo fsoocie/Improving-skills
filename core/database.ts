@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 export default async function (afterConnection: () => void): Promise<void> {
   try {
-    await mongoose.connect(process.env.mongoUri || 'mongodb+srv://fsoocie:windra1110ixxx@improving-skills-cluste.9wrk9.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+    await mongoose.connect(process.env.MONGO_URL || 'mongodb+srv://fsoocie:windra1110ixxx@improving-skills-cluste.9wrk9.mongodb.net/<dbname>?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true

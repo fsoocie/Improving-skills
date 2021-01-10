@@ -5,7 +5,7 @@ message.config({
   maxCount: 2,
   duration: 3
 })
-const style = {textAlign: 'right'}
+const style = {textAlign: "center" as "center"}
 
 export {message, style}
 

@@ -1,4 +1,3 @@
-import { Col, Row } from 'antd'
 import Title from 'antd/lib/typography/Title'
 import Text from 'antd/lib/typography/Text'
 import React from 'react'
@@ -11,7 +10,6 @@ interface IActivitiesWrapperProps {
 }
 
 export const ActivitiesWrapper: React.FC<IActivitiesWrapperProps> = ({children, colorShadow, date}) => {
-  console.log(date)
   return (
     <div className='activitiesWrapper' style={{boxShadow: `${colorShadow} 0 1px 4px`}}>
       <div className='activitiesWrapperHeader'>

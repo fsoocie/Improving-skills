@@ -59,6 +59,7 @@ function* fetchTodosSaga() {
     const todos = yield call(todosApi.get)
     yield put(setTodos(todos))
   } catch (e) {
+    console.log(e)
     message.error({content: 'Server has not responded', key, style})
   }
 }
