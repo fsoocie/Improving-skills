@@ -23,7 +23,11 @@ app.use('/activities', activitiesRoutes)
 app.use('/upload', uploadRoutes)
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build/static')))
+  app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+
+  app.get('*', (req: express.Request, res: express.Response) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
 }
 
 connect(() => {
